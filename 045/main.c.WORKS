@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int
+main(int argc, char* argv[])
+{
+	unsigned long long h, p, t;
+
+	for(h = 143, p = 165, t = 285; h < 100000; ++h)
+	{
+		unsigned long long hex = h * (2 * h - 1);
+		unsigned long long pen;
+		unsigned long long tri;
+
+		do {
+			pen = p * (3 * p - 1) / 2;
+			if(pen==hex) break;
+			p++;
+		} while(pen < hex);
+		do {
+			tri = t * (t + 1) / 2;
+			if(tri==hex) break;
+			t++;
+		} while(tri < hex);
+		if((tri==pen)&&(tri==hex))
+		{
+			if(hex!=40755)
+			{
+			printf("%llu\n", hex);
+			break;
+			}
+		}
+	}
+	return 0;
+}
+
