@@ -14,16 +14,10 @@ init()
   for(i=0;i<NROWS;++i) rows[i][0]=rows[i][1]=0;
 }
 
-static void
-next(int row)
-{
-  rows[row][0]++;
-}
-
 static int
 W(int w, int h)
 {
-	int
+	return 0;
 }
 
 int

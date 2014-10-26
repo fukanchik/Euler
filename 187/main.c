@@ -2,10 +2,10 @@
 
 #include <euler/config.h>
 
-#define MAX 100000000ull
+#define MAX2 100000000ull
 #define NPRIMES nprimes
 
-static ULL primes[MAX];
+static ULL primes[MAX2];
 static ULL nprimes;
 
 static void prime_add(ULL i)
@@ -32,7 +32,7 @@ fill_primes()
 
   primes[0]=2;
   nprimes=1;
-  for(i = 3; i < MAX; i+=2) {
+  for(i = 3; i < MAX2; i+=2) {
     if(isprime(i)) prime_add(i);
     if((i%100000)==1) printf("nprimes=" ULLFMT " %d\n", nprimes, (int)i);
   }
