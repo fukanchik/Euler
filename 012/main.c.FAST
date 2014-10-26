@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <math.h>
+
+#include <primes.h>
+
+#define MAX 1000000
+
+static struct prime_list_t primes;
+
+static int
+numdivs3(int num)
+{
+	int i;
+	int numdivs = 1;
+
+	for(i = 0;  i < primes.count; ++i)
+	{
+		int count = 0;
+
+		while(num % primes.primes[i]==0)
+		{
+			count++;
+			num /= primes.primes[i];
+		}
+		if(count != 0)
+		{
+			 numdivs *= count + 1;
+		}
+	}
+	return numdivs;
+}
+
+int
+main(int argc, char* argv[])
+{
+	int i;
+	int tri;
+
+	primes_init_fill(&primes, sqrt(MAX)+1);
+
+	for(tri = 0, i = 1; i < MAX; ++i)
+	{
+		tri += i;
+		if(numdivs3(tri) > 500) {
+			printf("%d\n", tri);
+			return 0;
+		}
+	}
+	return 0;
+}
+
