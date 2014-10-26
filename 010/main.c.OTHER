@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <math.h>
+
+#define SIZE 2000000
+
+static int primes[SIZE];
+static int current;
+
+static int
+isprime(int num)
+{
+	int half = sqrt(num) + 1;
+	int i;
+
+	for(i = 0; primes[i] < half && i < current; ++i)
+		if((num % primes[i]) == 0)
+			return 0;
+
+	primes[current++] = num;
+
+	return 1;
+}
+
+int next(int prime)
+{
+	double l = log(prime);
+	double n = prime / l;
+	int ret = primes[current-2] + (int)(n+.5);
+
+	return ret+1;
+}
+
+int
+main(int argc, char* argv[])
+{
+	int ca = 2;
+	long long sum;
+	int i;
+
+	primes[0]=2;
+	primes[1]=3;
+	primes[2]=5;
+	primes[3]=7;
+	current=4;
+
+	for( sum = 17, i = 11; i < SIZE;)
+	{
+		sum += i * isprime(i);
+		i+=ca;
+		ca = 2 + ca % 4;
+	}
+
+	printf("%lld\n", sum);
+
+	return 0;
+}
+
