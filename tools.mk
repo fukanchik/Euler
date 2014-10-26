@@ -1,0 +1,3 @@
+STRIP=strip
+CC=gcc
+
