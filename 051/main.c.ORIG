@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <euler/primes.h>
+
+struct prime_list_t primes;
+
+#define __2
+
+#ifdef __2
+#define NUMSZ 2
+#define LOWEST 10
+#define REPLSZ 1
+int REPL[REPLSZ]={1};
+int num[NUMSZ]={3,0};
+#endif
+
+#ifdef __5
+#define NUMSZ 5
+#define LOWEST 10000
+#define REPLSZ 2
+int REPL[REPLSZ]={NUMSZ-3, NUMSZ-4};
+int num[NUMSZ]={3,0,0,6,5};
+#endif
+
+int
+combine(int *buf, int len)
+{
+  int ret = 0;
+  int i;
+
+  for(i=len-1;i >= 0;--i) {
+    ret = ret * 10 + buf[i];
+  }
+
+  return ret;
+}
+
+int main(int argc, char *argv[])
+{
+  int i,j;
+  int count;
+
+  primes_init_fill(&primes, 1000000);
+
+  count=0;
+  for(i=0;i<=9;++i) {
+    int val;
+    for(j=0;j<REPLSZ;++j) {
+      num[REPL[j]] = i;
+    }
+    val = combine(num, NUMSZ);
+    if(val<LOWEST) continue;
+    if(primes_is_prime(&primes, val)) {
+      printf("%d\n", val);
+      count++;
+    }
+  }
+  printf("count=%d\n", count);
+  return 0;
+}
+
