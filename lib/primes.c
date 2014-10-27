@@ -10,7 +10,7 @@
 #include <euler/primes.h>
 
 static void
-primes_init( struct prime_list_t * list, int size )
+primes_init( prime_list_t * list, int size )
 {
 	list->total = size;
 	list->count = 0;
@@ -18,7 +18,7 @@ primes_init( struct prime_list_t * list, int size )
 }
 
 void
-primes_for_each( struct prime_list_t * list, int (*f)(struct prime_list_t*, int prime, void * arg), void * arg)
+primes_for_each( prime_list_t * list, int (*f)(prime_list_t*, int prime, void * arg), void * arg)
 {
 	int i;
 
@@ -30,7 +30,7 @@ primes_for_each( struct prime_list_t * list, int (*f)(struct prime_list_t*, int 
 }
 
 void
-primes_for_each_extra( int start, int end, struct prime_list_t * list, int (*f)(struct prime_list_t*, int position, int prime, void * arg), void * arg)
+primes_for_each_extra( int start, int end, prime_list_t * list, int (*f)(prime_list_t*, int position, int prime, void * arg), void * arg)
 {
 	int i;
 
@@ -42,7 +42,7 @@ primes_for_each_extra( int start, int end, struct prime_list_t * list, int (*f)(
 }
 
 static void
-primes_add( struct prime_list_t * list, int prime )
+primes_add( prime_list_t * list, int prime )
 {
 	if(list->total == list->count)
 	{
@@ -53,7 +53,7 @@ primes_add( struct prime_list_t * list, int prime )
 }
 
 int
-primes_add_sieve( struct prime_list_t * list, int num)
+primes_add_sieve( prime_list_t * list, int num)
 {
 	int half = sqrt(num) + 1;
 	int i;
@@ -68,7 +68,7 @@ primes_add_sieve( struct prime_list_t * list, int num)
 }
 
 void
-primes_init_fill( struct prime_list_t * list, int size )
+primes_init_fill( prime_list_t * list, int size )
 {
 	int i;
 
@@ -81,7 +81,7 @@ primes_init_fill( struct prime_list_t * list, int size )
 
 
 int
-primes_is_prime( struct prime_list_t * list, int num )
+primes_is_prime( prime_list_t * list, int num )
 {
 	int half = sqrt(num) + 1;
 	int i;
