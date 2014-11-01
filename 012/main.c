@@ -1,44 +1,50 @@
 #include <stdio.h>
+#include <math.h>
 
-#include <euler/config.h>
+#include <euler/primes.h>
+
+#define MAXNUM 1000000
+
+static prime_list_t primes;
 
 static int
-numdivs(ULL num)
+numdivs3(int num)
 {
-	int count=0;
-	ULL divisor;
+	int i;
+	int numdivs = 1;
 
-	divisor=1;
-	while(num>=divisor)
+	for(i = 0;  i < primes.count; ++i)
 	{
-		if(num%divisor==0)
+		int count = 0;
+
+		while(num % primes.primes[i]==0)
 		{
 			count++;
+			num /= primes.primes[i];
 		}
-		divisor++;
+		if(count != 0)
+		{
+			 numdivs *= count + 1;
+		}
 	}
-	return count;
+	return numdivs;
 }
 
 int
 main(int argc, char* argv[])
 {
-	ULL i;
-	ULL tri;
-	int nd, max=0;
+	int i;
+	int triangle_number;
 
-	for(i=11000;i<1000000;++i)
+	primes_init_fill(&primes, sqrt(MAXNUM)+1);
+
+	for(triangle_number = 0, i = 1; i < MAXNUM; ++i)
 	{
-		tri=(i * (i + 1))/2l;
-		if(i%1000==998)printf(ULLFMT" => "ULLFMT" ", i, tri);
-		nd=numdivs(tri);
-		if(nd>max)max=nd;
-		if(i%1000==998)printf(" ... %d\n", nd);
-		if(nd>500) {
-			printf(ULLFMT"\n", tri);
+		triangle_number += i;
+		if(numdivs3(triangle_number) > 500) {
+			printf("%d\n", triangle_number);
 			return 0;
 		}
 	}
-	printf("Nothing: %d\n", max);
 	return 0;
 }
