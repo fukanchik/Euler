@@ -11,3 +11,5 @@ $(APP): $(OBJS)
 clean:
 	rm -rf $(APP) $(OBJS)
 
+uno: all
+	uno -I../lib -w $(subst .o,.c,$(OBJS))

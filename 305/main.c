@@ -67,7 +67,7 @@ getpos(ULL N)
 }
 
 int
-main(int argc, char *v[])
+main(int argc, char *argv[])
 {
 	ULL pos;
 	pos = getpos(1);

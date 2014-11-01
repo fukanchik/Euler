@@ -24,7 +24,8 @@ read_names()
 	char **ret;
 	int sz=0;
 
-	if((fd=open(INFILE, O_RDONLY|O_BINARY))==-1) FAIL("Can't open " INFILE);
+	fd=open(INFILE, O_RDONLY|O_BINARY);
+	if(fd == -1) FAIL("Can't open " INFILE);
 	memset(buf, 0, sizeof(buf));
 	if(read(fd, buf, 50000)==-1)FAIL("Can't read from "INFILE);
 	close(fd);

@@ -47,7 +47,7 @@ nrects2(int x, int y)
 }
 
 int
-main(int c, char *v[])
+main(int argc, char *argv[])
 {
 	int square=0;
 	int delta = XMAX*YMAX*10;

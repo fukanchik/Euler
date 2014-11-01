@@ -32,7 +32,7 @@ fordigits(int a, int b)
 }
 
 int
-main(int c, char *v[])
+main(int argc, char *argv[])
 {
 	int a, b, i;
 	ULL max;
@@ -58,3 +58,4 @@ main(int c, char *v[])
 	printf(ULLFMT "\n", max);
 	return 0;
 }
+

@@ -38,7 +38,7 @@ main(int argc, char* argv[])
 {
 	int div;
 	int max=0;
-	int val;
+	int val = -1;
 
 	for(div=1;div<1000;++div) {
 		int i;

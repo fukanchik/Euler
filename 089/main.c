@@ -57,7 +57,7 @@ parse_roman(char *buf)
 }
 
 int
-main(int c, char *v[])
+main(int argc, char *argv[])
 {
   char buf[256];
   int lorig = 0;

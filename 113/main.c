@@ -28,7 +28,7 @@ isdecr(ULL num)
 }
 
 int
-main(int c, char *v[])
+main(int argc, char *argv[])
 {
   ULL i;
   ULL nb;

@@ -65,7 +65,7 @@ count_below(ULL n)
 }
 
 int
-main(int c, char *v[])
+main(int argc, char *argv[])
 {
   fill_primes();
   print_primes();

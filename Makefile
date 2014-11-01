@@ -13,3 +13,7 @@ test: all
 	echo "Test"
 	@$(foreach f, $(basename $(wildcard [0-9][0-9][0-9])), echo "Entering $f"; cd $f; ./euler$f; cd ..;)
 
+uno: all
+	echo "UNO"
+	@$(foreach f, $(basename $(wildcard [0-9][0-9][0-9])), echo "Entering $f"; cd $f; make uno; cd ..;)
+

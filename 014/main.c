@@ -26,7 +26,7 @@ main(int argc, char* argv[])
 {
 	ULL n = 13;
 	int max=0;
-	int num;
+	int num = -1;
 	int i;
 
 	while(n > 1)
