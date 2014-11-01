@@ -5,7 +5,7 @@
 #define START 11
 #define LEN 20
 
-struct large*
+static struct large*
 mult(int n)
 {
 	int i;

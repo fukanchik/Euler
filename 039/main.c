@@ -3,7 +3,8 @@
 #include <euler/assert.h>
 
 #define max(x,y) (x>y?x:y)
-int
+
+static int
 istri(int a, int b, int c)
 {
 	int ret;
@@ -24,7 +25,8 @@ int J[1000];
 int K[1000];
 int c;
 
-int find(int n)
+static int
+find(int n)
 {
 	int i;
 
@@ -36,7 +38,8 @@ int find(int n)
 	return 0;
 }
 
-int count(int p)
+static int
+count(int p)
 {
 	int i,j, k;
 	c=0;

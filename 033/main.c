@@ -2,7 +2,7 @@
 
 #define min(x,y) (x<y?x:y)
 
-int
+static int
 is_curious(int num, int den)
 {
 	int dn0 = num % 10;
@@ -18,7 +18,7 @@ is_curious(int num, int den)
 	return 0;
 }
 
-int
+static int
 least_common_term(int num, int den)
 {
 	int f = min(num, den);

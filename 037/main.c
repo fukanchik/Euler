@@ -6,8 +6,8 @@
 int sum = 0;
 int count=0;
 
-int
-check_trunc(struct prime_list_t *list, int prime, void * arg)
+static int
+check_trunc(prime_list_t *list, int prime )
 {
 	int primeo = prime;
 	int rev = reverse(prime);
@@ -33,13 +33,14 @@ check_trunc(struct prime_list_t *list, int prime, void * arg)
 int
 main(int argc, char *argv[])
 {
-	struct prime_list_t primes;
+	prime_list_t primes;
 
 	primes_init_fill(&primes, 1000000);
 
-	primes_for_each(&primes, check_trunc, NULL);
+	primes_for_each_simple(&primes, check_trunc);
 
 	printf("%d\n", sum);
 
 	return 0;
 }
+

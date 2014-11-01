@@ -14,7 +14,7 @@ static int values[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
 static int
 to_roman(int value, char *buf, int size)
 {
-  int vpos = 0;
+  unsigned vpos = 0;
   int bpos = 0;
 
   while(vpos < COUNT(values)) {

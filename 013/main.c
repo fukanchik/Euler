@@ -105,9 +105,9 @@ static char *numbers[]={
 "53503534226472524250874054075591789781264330331690"
 };
 
-char sum[55];
+static char sum[55];
 
-void
+static void
 summa(int index, int d2)
 {
 	int n1 = (sum[index]-'0');
@@ -127,7 +127,7 @@ summa(int index, int d2)
 int
 main(int argc, char* argv[])
 {
-	int i;
+	unsigned i;
 	int j;
 	char *p;
 
@@ -148,3 +148,4 @@ main(int argc, char* argv[])
 
 	return 0;
 }
+

@@ -30,6 +30,19 @@ primes_for_each( prime_list_t * list, int (*f)(prime_list_t*, int prime, void * 
 }
 
 void
+primes_for_each_simple(prime_list_t * list, int (*f)(prime_list_t*, int prime) )
+{
+	int i;
+
+	for(i = 0; i < list->count; ++i)
+	{
+	  if(f(list, list->primes[i]))
+			break;
+	}
+}
+
+
+void
 primes_for_each_extra( int start, int end, prime_list_t * list, int (*f)(prime_list_t*, int position, int prime, void * arg), void * arg)
 {
 	int i;
@@ -52,7 +65,7 @@ primes_add( prime_list_t * list, int prime )
 	list->primes[list->count++] = prime;
 }
 
-int
+static int
 primes_add_sieve( prime_list_t * list, int num)
 {
 	int half = sqrt(num) + 1;

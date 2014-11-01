@@ -10,13 +10,14 @@
 ULL Ps[PSIZE];
 ULL Pd[PSIZE];
 
-ULL
+static ULL
 P(ULL n)
 {
 	return (n * (3ul * n - 1ul)) / 2ul;
 }
 
-int cmp_int64(const void *n1, const void *n2)
+static int
+cmp_int64(const void *n1, const void *n2)
 {
 	ULL v1 = *(ULL*)n1;
 	ULL v2 = *(ULL*)n2;
@@ -26,7 +27,8 @@ int cmp_int64(const void *n1, const void *n2)
 	return 0;
 }
 
-int ispent(ULL n)
+static int
+ispent(ULL n)
 {
 	int *b = bsearch(&n, Pd, PSIZE, sizeof(ULL), cmp_int64);
 

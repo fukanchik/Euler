@@ -6,7 +6,7 @@
 
 #include <euler/reverse.h>
 
-int
+static int
 nlen(int num)
 {
 	if(num<0) abort();
@@ -21,7 +21,7 @@ nlen(int num)
 
 static int pos[]={1, 10, 100, 1000, 10000, 100000, 1000000};
 
-int digit(int num, int n)
+static int digit(int num, int n)
 {
 	int ret;
 

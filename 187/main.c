@@ -49,11 +49,11 @@ static void print_primes()
 static int
 count_below(ULL n)
 {
-  int j, i;
+  unsigned j, i;
   int ret=0;
 
-  for(j=0;j<NPRIMES;j++) {
-    for(i=j;j<NPRIMES;++i) {
+  for(j = 0; j < NPRIMES; j++) {
+    for(i = j; j < NPRIMES; ++i) {
       ULL num = primes[j] * primes[i];
       if(num > n) {
         break;

@@ -14,7 +14,7 @@ sumdivs(int num)
 	return ret;
 }
 
-int
+static int
 contains(int *arr, int size, int num)
 {
 	int i;

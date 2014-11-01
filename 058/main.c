@@ -4,11 +4,11 @@
 
 #define NUM 30000
 
-struct prime_list_t primes;
+prime_list_t primes;
 
 int cache[NUM];
 
-int
+static int
 diagonals(int sz)
 {
 	int diag[4];

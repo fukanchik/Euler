@@ -3,7 +3,7 @@
 
 #include <euler/primes.h>
 
-int
+static int
 ispandigital(int num)
 {
 	unsigned int counts[10];
@@ -38,7 +38,7 @@ ispandigital(int num)
 int
 main(int argc, char *argv[])
 {
-	struct prime_list_t primes;
+	prime_list_t primes;
 	int max_digits;
 	int i;
 

@@ -15,7 +15,7 @@
 
 #define INFILE "names.txt" 
 
-char**
+static char**
 read_names()
 {
 	char buf[50000];
@@ -72,7 +72,7 @@ comp(const void* e1, const void* e2)
 	return strcmp(*p1, *p2);
 }
 
-int
+static int
 calc(char*c)
 {
 	int sum=0;

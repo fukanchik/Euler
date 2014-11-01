@@ -9,7 +9,7 @@
 #define NUMPRIMES 10000
 prime_list_t primes;
 
-int*
+static int*
 build_graph()
 {
   int i,j;
@@ -39,7 +39,7 @@ build_graph()
   return matrix;
 }
 
-void
+static void
 print_row(int *row, int width)
 {
   char *sep="";
@@ -55,7 +55,7 @@ print_row(int *row, int width)
   printf("]");
 }
 
-int
+static int
 row_len(int *row, int width)
 {
   int len=0;
@@ -67,7 +67,7 @@ row_len(int *row, int width)
   return len;
 }
 
-void
+static void
 set_intersect(int *dest, int *src, int width)
 {
   int i;
@@ -78,19 +78,19 @@ set_intersect(int *dest, int *src, int width)
   }
 }
 
-void
-set_union(int *dest, int width, int vertex)
+static void
+set_union(int *dest, int vertex)
 {
   dest[vertex]=vertex;
 }
 
-void
-set_diff(int *dest, int width, int vertex)
+static void
+set_diff(int *dest, int vertex)
 {
   dest[vertex]=-1;
 }
 
-void
+static void
 neighbour(int *set, int *matrix, int width, int vertex)
 {
   int i;
@@ -104,7 +104,7 @@ neighbour(int *set, int *matrix, int width, int vertex)
   }
 }
 
-int
+static int
 is_empty(int *set, int width)
 {
   int i;
@@ -115,7 +115,7 @@ is_empty(int *set, int width)
   return 1;
 }
 
-void
+static void
 bron_kerbosch_inner(int *matrix, int width, int *set_all, int *set_some, int *set_none)
 {
   int SIZE = sizeof(int) * width;
@@ -145,7 +145,7 @@ bron_kerbosch_inner(int *matrix, int width, int *set_all, int *set_some, int *se
     if(v==-1)continue;
 
     memcpy(new_all, set_all, SIZE);
-    set_union(new_all, width, v);
+    set_union(new_all, v);
 
     memcpy(new_some, set_some, SIZE);
     neighbour(dest, matrix, width, v);
@@ -156,12 +156,12 @@ bron_kerbosch_inner(int *matrix, int width, int *set_all, int *set_some, int *se
 
     bron_kerbosch_inner(matrix, width, new_all, new_some, new_none);
 
-    set_diff(set_some, width, v);
-    set_union(set_none, width, v);
+    set_diff(set_some, v);
+    set_union(set_none, v);
   }
 }
 
-void
+static void
 bron_kerbosch(int *matrix, int width)
 {
   int SIZE = sizeof(int) * width;

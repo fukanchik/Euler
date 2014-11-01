@@ -17,7 +17,7 @@ init()
 static int
 W(int w, int h)
 {
-	return 0;
+	return w+h;
 }
 
 int

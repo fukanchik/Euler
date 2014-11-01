@@ -3,7 +3,7 @@
 #include <euler/primes.h>
 
 static int
-number_of_primes( struct prime_list_t * primes, int a, int b)
+number_of_primes( prime_list_t * primes, int a, int b)
 {
 	int n;
 
@@ -20,7 +20,7 @@ number_of_primes( struct prime_list_t * primes, int a, int b)
 int
 main(int argc, char* argv[])
 {
-	struct prime_list_t primes;
+	prime_list_t primes;
 	int a, b;
 	int ca, cb, max;
 

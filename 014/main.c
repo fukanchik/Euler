@@ -2,7 +2,7 @@
 
 #include <euler/config.h>
 
-ULL
+static ULL
 next(ULL c)
 {
 	if(c % 2 == 0)
@@ -11,7 +11,7 @@ next(ULL c)
 	return 3 * c + 1;
 }
 
-int len(ULL n)
+static int len(ULL n)
 {
 	int count = 0;
 	while(n > 1) {

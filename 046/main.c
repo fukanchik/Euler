@@ -5,9 +5,9 @@
 
 #define UPPER 100000
 
-struct prime_list_t primes;
+prime_list_t primes;
 
-int
+static int
 is_goldbach_other(int num, int *out_prime, int *out_square)
 {
 	int i;

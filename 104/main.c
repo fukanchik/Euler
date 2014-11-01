@@ -9,7 +9,7 @@ struct large* ln1;
 struct large* ln2;
 int last=1;
 
-void
+static void
 large_fibo(struct large* out, int num)
 {
   int i;
@@ -35,7 +35,7 @@ large_fibo(struct large* out, int num)
   last = num;
 }
 
-int
+static int
 large_is_pandigital1_9(struct large* num, int dir)
 {
   int val[10]={0};

@@ -26,7 +26,7 @@ pan(long long val)
   return sum==10;
 }
 
-int
+static int
 three(long long v, int n)
 {
   long v0;
@@ -35,7 +35,7 @@ three(long long v, int n)
   return (v / v0) % 1000;
 }
 
-int
+static int
 sum(int v, int t)
 {
   return v%nums[t]==0;

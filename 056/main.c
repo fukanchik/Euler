@@ -1,14 +1,14 @@
 #include <stdio.h>
+#include <euler/config.h>
 
-#define MAX 100
-#define UINT unsigned int
+#define MAXNUM 100
 
 static int
-digitalsum(UINT a)
+digitalsum(ULL a)
 {
 	int sum = 0;
 	for(;a;) {
-		UINT digit = a % 10;
+		ULL digit = a % 10;
 		a /= 10u;
 		sum += digit;
 	}
@@ -23,7 +23,7 @@ fordigits(int a, int b)
 	sum = 0;
 	for(;a;) {
 		int digit = a % 10;
-		UINT v = digit * b;
+		ULL v = digit * b;
 		a /= 10;
 		sum += digitalsum(v);
 	}
@@ -35,19 +35,19 @@ int
 main(int c, char *v[])
 {
 	int a, b, i;
-	int max;
+	ULL max;
 
 	printf(">> %d\n", fordigits(13, fordigits(13, fordigits(13, fordigits(13,13)))));
 
 	max = 0;
-	for(a=1;a<MAX;a++) {
-		for(b=1;b<MAX;b++) {
-			UINT sum = 0;
-			UINT n=a;
+	for(a=1;a<MAXNUM;a++) {
+		for(b=1;b<MAXNUM;b++) {
+			ULL sum = 0;
+			ULL n=a;
 			for(i=1;i<=b;++i) {
 				n=fordigits(a, n);
 				if(a==13 && b==5) {
-					printf("%d %d %d\n", i, n, sum);
+					printf("%d " ULLFMT " " ULLFMT "\n", i, n, sum);
 				}
 				sum += n;
 			}
@@ -55,6 +55,6 @@ main(int c, char *v[])
 			if(sum>max) max=sum;
 		}
 	}
-	printf("%d\n", max);
+	printf(ULLFMT "\n", max);
 	return 0;
 }

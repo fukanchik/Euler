@@ -3,7 +3,8 @@
 #include <euler/config.h>
 #include <euler/assert.h>
 
-ULL powi(ULL b, ULL e)
+static ULL
+powi(ULL b, ULL e)
 {
 	ULL i, ret;
 
@@ -14,7 +15,8 @@ ULL powi(ULL b, ULL e)
 	return ret;
 }
 
-ULL numlen(ULL i)
+static ULL
+numlen(ULL i)
 {
 	ULL len=0;
 

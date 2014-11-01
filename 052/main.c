@@ -11,7 +11,7 @@ char_cmp(const void* p1, const void*p2)
 	return *c2-*c1;
 }
 
-int
+static int
 is_same(int x)
 {
 	char x1[20];

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int
+static int
 num_factors(int num)
 {
 	int i;

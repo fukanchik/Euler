@@ -8,7 +8,7 @@
 static char perms[11];
 int count=1;
 
-void
+static void
 enlist(char *buf)
 {
 	if(count==1000000) {
@@ -18,7 +18,7 @@ enlist(char *buf)
 	count++;
 }
 
-void
+static void
 permute(char *buf, int start, int n)
 {
 	enlist(buf);

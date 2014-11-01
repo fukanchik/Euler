@@ -1,13 +1,12 @@
 #include <stdio.h>
-
-#define UINT unsigned long long
+#include <euler/config.h>
 
 static int
-isincr(UINT num)
+isincr(ULL num)
 {
-  int prev = 10;
+  ULL prev = 10;
   while(num) {
-    UINT digit = num % 10;
+    ULL digit = num % 10;
     num /= 10;
     if(digit > prev) return 0;
     prev = digit;
@@ -16,11 +15,11 @@ isincr(UINT num)
 }
 
 static int
-isdecr(UINT num)
+isdecr(ULL num)
 {
-  int prev=0;
+  ULL prev=0;
   while(num) {
-    UINT digit = num % 10;
+    ULL digit = num % 10;
     num /= 10;
     if(digit < prev) return 0;
     prev = digit;
@@ -31,8 +30,8 @@ isdecr(UINT num)
 int
 main(int c, char *v[])
 {
-  UINT i;
-  UINT nb;
+  ULL i;
+  ULL nb;
 
   printf("%d %d %d %d\n",
 	 isincr(1234),

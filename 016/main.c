@@ -2,7 +2,7 @@
 
 #include <euler/large.h>
 
-struct large*
+static struct large*
 two1000()
 {
 	int i;

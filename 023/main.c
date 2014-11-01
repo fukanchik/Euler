@@ -28,7 +28,7 @@ is_abundant(const int num)
 	return sum_of_divisors(num) > num;
 }
 
-int
+static int
 contains(int *a, int c, int n)
 {
 	int mid;

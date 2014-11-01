@@ -24,7 +24,7 @@ test_large()
 	n2->buffer[1]=0;
 }
 
-struct large*
+static struct large*
 fact100()
 {
 	struct large* ret = large_new(600);

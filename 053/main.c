@@ -2,7 +2,7 @@
 #define max(x,y) ((x)>(y)?(x):(y))
 #define min(x,y) ((x)<(y)?(x):(y))
 
-int
+static int
 C(int n, int r)
 {
 	int diff = n - r;

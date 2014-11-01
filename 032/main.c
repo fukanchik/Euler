@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <euler/pandigital.h>
 
-int
+static int
 find(int *a, int l, int v)
 {
 	int i;
 	for(i=0;i<l;++i)if(a[i]==v)return 1;
 	return 0;
 }
+
 int
 main(int argc, char *argv[])
 {

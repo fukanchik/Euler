@@ -2,13 +2,14 @@
 BUG in gcc on windows.
 */
 #include <stdio.h>
+#include <euler/config.h>
 
 #define NUM 7830457
 
-unsigned long long
+static ULL
 two7830457()
 {
-	unsigned long long ret = 1ULL;
+	ULL ret = 1ULL;
 	int i;
 
 	for(i = 0; i < NUM; ++i) {
@@ -27,8 +28,8 @@ two7830457()
 int
 main(int argc, char* argv[])
 {
-	unsigned long long two=two7830457();
-	printf("%llu\n", two);
+	ULL two=two7830457();
+	printf(ULLFMT "\n", two);
 
 	return 0;
 }

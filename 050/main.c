@@ -3,7 +3,7 @@
 #include <euler/primes.h>
 
 static int
-isprime(struct prime_list_t *primes, int num)
+isprime(prime_list_t *primes, int num)
 {
 	int i;
 
@@ -17,7 +17,7 @@ isprime(struct prime_list_t *primes, int num)
 int
 main(int argc, char *argv[])
 {
-	struct prime_list_t primes;
+	prime_list_t primes;
 	int sum, i;
 
 	primes_init_fill(&primes, 1000000);

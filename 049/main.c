@@ -3,14 +3,14 @@
 #include <string.h>
 
 #include <euler/assert.h>
+#include <euler/config.h>
 
 #define PRIMESINPUT "primes1.txt"
 
 #define NPRIM 1000000
-#define UINT unsigned int
 #define MAGIC 3330
 
-UINT primes[NPRIM];
+ULL primes[NPRIM];
 
 static void
 read_primes()
@@ -24,9 +24,9 @@ read_primes()
   }
 
   for(i=0;!feof(fi) && i < NPRIM;++i) {
-    if(fscanf(fi, "%u", primes+i) != 1) FAIL("Corrupted primes input file " PRIMESINPUT);
+    if(fscanf(fi, ULLFMT , primes+i) != 1) FAIL("Corrupted primes input file " PRIMESINPUT);
   }
-  printf("%d\n", primes[NPRIM-1]);
+  printf(ULLFMT "\n", primes[NPRIM-1]);
   fclose(fi);
 }
 
@@ -52,11 +52,11 @@ ispermutation(int n1, int n2)
 }
 
 static int
-isprime(int num)
+isprime(ULL num)
 {
   int i;
 
-  for(i=0;i<NPRIM;++i) {
+  for(i=0;i < NPRIM;++i) {
     if(primes[i]==num)
       return 1;
     if(primes[i] > num)

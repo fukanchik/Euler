@@ -2,7 +2,7 @@
 #include <math.h>
 #include <string.h>
 
-int
+static int
 nmultiplier(int num)
 {
 	if(num<0)return 0;
@@ -12,7 +12,7 @@ nmultiplier(int num)
 	return 0;
 }
 
-int
+static int
 pow10(int n)
 {
 	if(n==0)return 1;
@@ -22,7 +22,8 @@ pow10(int n)
 	return 0;
 }
 
-int find(int* a, int l, int n){
+static int
+find(int* a, int l, int n){
 	int i;
 
 	for(i=0;i<l;++i)

@@ -6,10 +6,11 @@
 #define MAXPRIME 1000000
 
 #define NGROUPS 100
-struct prime_list_t primes;
+prime_list_t primes;
 int groups[NGROUPS];
 
-int numlen(ULL i)
+static int
+numlen(ULL i)
 {
   int len = 0;
 
@@ -20,17 +21,19 @@ int numlen(ULL i)
   return len;
 }
 
-void numtobuf(int prime, int *buf, int len)
+static void
+numtobuf(int prime, int *buf, int len)
 {
   int i;
-  for(i=0;prime>0;++i) {
-    buf[i]=prime%10;
-    prime=prime/10;
+
+  for(i = 0; (prime > 0) && (i < len); ++i) {
+    buf[i] = prime % 10;
+    prime = prime / 10;
   }
 }
 
-int
-find_groups(struct prime_list_t* primes, int pos, int prime, void *arg)
+static int
+find_groups(prime_list_t* primes, int pos, int prime, void *arg)
 {
   int *groups = (int*)arg;
   int len = numlen(prime);
@@ -57,8 +60,8 @@ struct search
   int *fixedpos, *fixed, fixedlen;
 };
 
-int
-filter_out(struct prime_list_t * primes, int pos, int prime, void * arg)
+static int
+filter_out(prime_list_t * primes, int pos, int prime, void * arg)
 {
   struct search *s = (struct search*)arg;
   int i;
