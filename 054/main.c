@@ -6,8 +6,11 @@
 
 #include "poker.h"
 
+/* The below is incorrect but works on dataset provided by projecteuler. */
+//#define TEST
+
 static int
-is_royal_flash(int hand[4][13])
+is_royal_flush(int hand[4][13])
 {
   int suit, ret;
 
@@ -16,7 +19,9 @@ is_royal_flash(int hand[4][13])
     if(ret) break;
   }
  
- if(ret) printf(" Royal Flash ");
+#ifdef VERBOSE
+ if(ret) printf(" Royal Flush ");
+#endif
 
  if(ret) {
    int kind, suit;
@@ -29,13 +34,14 @@ is_royal_flash(int hand[4][13])
        }
      }
    }
+   ret = ret + 1;
  }
 
   return ret;
 }
 
 static int
-is_straight_flash(int hand[4][13])
+is_straight_flush(int hand[4][13])
 {
   int suit, ret, i;
   int value = 0;
@@ -53,10 +59,13 @@ is_straight_flash(int hand[4][13])
     }
   }
 
-  if(ret) printf(" Straight Flash ");
+#ifdef VERBOSE
+  if(ret) printf(" Straight Flush ");
+#endif
 
   if(ret) {
     ret = value;
+    ret = ret + 1;
   }
 
   return ret;
@@ -76,9 +85,14 @@ is_four_of_a_kind(int hand[4][13])
       break;
     }
   }
+
+#ifdef VERBOSE
   if(ret) printf(" Four of a Kind ");
+#endif
+
   if(ret) {
     ret = value;
+    ret = ret + 1;
   }
 
   return ret;
@@ -116,8 +130,14 @@ is_full_house(int hand[4][13])
 
   ret = (two && three);
 
-  if(ret) ret = value;
-  if(ret) printf(" Full House %c ", to_kind_name[ret]);
+#ifdef VERBOSE
+  if(ret) printf(" Full House %c ", to_kind_name[value]);
+#endif
+
+  if(ret) {
+    ret = value;
+    ret = ret + 1;
+  }
 
   return ret;
 }
@@ -144,9 +164,12 @@ is_flush(int hand[4][13])
 	break;
       }
     }
+    ret = ret + 1;
   }
 
-  if(ret) printf(" Flush %c", to_kind_name[ret]);
+#ifdef VERBOSE
+  if(ret) printf(" Flush %c", to_kind_name[ret-1]);
+#endif
 
   return ret;
 }
@@ -154,22 +177,35 @@ is_flush(int hand[4][13])
 static int
 is_straight(int hand[4][13])
 {
-  
   int suit, ret, i, sum;
+  int value, k;
 
   ret = 0;
   for(i = 0; i < 13 - 5; ++i) {
     sum = 0;
-    for(suit = 0; suit < 4; ++suit) {
-      sum += hand[suit][i] + hand[suit][i+1] + hand[suit][i+2] + hand[suit][i+3] + hand[suit][i+4];
+    for(k=0;k<5;++k) {
+      for(suit = 0; suit < 4; ++suit) {
+	sum += hand[suit][i+k];
+	if(hand[suit][i+k]) {
+	  break;
+	}
+      }
     }
-    if(sum==5) {
+    if(sum == 5) {
       ret = 1;
+      value = i;
       break;
     }
   }
 
-  if(ret) printf(" Straight ");
+#ifdef VERBOSE
+  if(ret) printf(" Straight %c ", to_kind_name[value]);
+#endif
+
+  if(ret) {
+    ret = value;
+    ret = ret + 1;
+  }
 
   return ret;
 }
@@ -186,12 +222,14 @@ is_three_of_a_kind(int hand[4][13])
       sum += hand[suit][kind];
     }
     if(sum==3) {
-      ret=1;
+      ret = kind + 1;
       break;
     }
   }
 
-  if(ret) printf(" Three of a Kind ");
+#ifdef VERBOSE
+  if(ret) printf(" Three of a Kind %c ", to_kind_name[ret-1]);
+#endif
 
   return ret;
 }
@@ -200,6 +238,7 @@ static int
 is_two_pairs(int hand[4][13])
 {
   int kind, suit, npairs, ret;
+  int value=0;
 
   npairs=0;
   for(kind = 0; kind < 13; ++kind) {
@@ -209,11 +248,18 @@ is_two_pairs(int hand[4][13])
     }
     if(sum==2) {
       npairs++;
+      value = kind;
     }
   }
   ret=(npairs==2);
 
-  if(ret)  printf(" Two Pairs ");
+  if(ret) {
+    ret = value;
+    ret = ret + 1;
+  }
+#ifdef VERBOSE
+  if(ret)  printf(" Two Pairs %c ", to_kind_name[ret-1]);
+#endif
 
   return ret;
 }
@@ -237,8 +283,14 @@ is_one_pair(int hand[4][13])
   }
   ret = (npairs == 1);
 
-  if(ret) ret = value;
-  if(ret) printf(" One Pair of %c", to_kind_name[ret]);
+#ifdef VERBOSE
+  if(ret) printf(" One Pair of %c.", to_kind_name[value]);
+#endif
+
+  if(ret) {
+    ret = value;
+    ret = ret + 1;
+  }
 
   return ret;
 }
@@ -254,14 +306,13 @@ is_high_card(int hand[4][13], int except)
       return kind;
     }
   }
-  //printf("High Card");
 
   return -1;
 }
 
 static PRIO functions[] = {
-  is_royal_flash,
-  is_straight_flash,
+  is_royal_flush,
+  is_straight_flush,
   is_four_of_a_kind,
   is_full_house,
   is_flush,
@@ -280,59 +331,74 @@ whowins(const char *line)
   convert(line, first);
   convert(line + 3 * 5, second);
 
-  //print_hand(first);
-  //print_hand(second);
+#ifdef VERBOSE
+  print_hand(first);
+  print_hand(second);
   print0(first);
   print0(second);
   printf("\n");
+#endif
 
-  int flash_first, flash_second;
+  int flush_first, flush_second;
   int i;
 
   for(i=0;i < sizeof(functions) / sizeof(functions[0]); ++i) {
-    flash_first = functions[i](first);
-    flash_second = functions[i](second);
+    flush_first = functions[i](first);
+    flush_second = functions[i](second);
 
-    if(!flash_first && !flash_second) continue;
-    if(!flash_first&&flash_second) return 2;
-    if(flash_first&&!flash_second) return 1;
-    if(flash_first && flash_second) {
+    if(!flush_first && !flush_second) continue;
+    if(!flush_first&&flush_second) return 2;
+    if(flush_first&&!flush_second) return 1;
+    if(flush_first && flush_second) {
       /* Find highest value. */
-      if(flash_first == flash_second) {
+      if(flush_first == flush_second) {
+#ifdef VERBOSE
 	printf(" Looking for highest ");
-	flash_first = is_high_card(first, flash_first);
-	flash_second = is_high_card(second, flash_second);
+#endif
+	flush_first = is_high_card(first, flush_first - 1);
+	flush_second = is_high_card(second, flush_second - 1);
       }
 
-      int ret= flash_first > flash_second ? 1 : 2;
+      int ret= flush_first > flush_second ? 1 : 2;
+#ifdef VERBOSE
       if(ret==1) {
-	printf("%c", to_kind_name[flash_first]);
+	printf(" first==%c", to_kind_name[flush_first]);
       } else {
-	printf("%c", to_kind_name[flash_second]);
+	printf(" second==%c", to_kind_name[flush_second]);
       }
+#endif
       return ret;
     }
   }
 
-  flash_first = is_high_card(first, -1);
-  flash_second = is_high_card(second, -1);
+  flush_first = is_high_card(first, -1);
+  flush_second = is_high_card(second, -1);
 
   int ret;
 
-  if(flash_first > flash_second)
+  if(flush_first > flush_second)
     ret=1;
   else
     ret=2;
 
-  printf(" Highest Card %c", to_kind_name[ret==1?flash_first:flash_second]);
+#ifdef VERBOSE
+  printf(" Highest Card %c", to_kind_name[ret==1?flush_first:flush_second]);
+#endif
 
   return ret;
 }
 
+#ifdef TEST
 static void
 test()
 {
-  char *hand = "5H 5C 6S 7S KD 2C 3S 8S 8D TD";
+  char *hand;
+  hand = "2S 2D 3H 6D QD 5S 6S 7H TH AS";
+  printf(" -> %d\n", whowins(hand));
+#if 0
+  hand = "2C 6D 9S KS KC 9H 9D TS TC QH";
+  printf(" -> %d\n", whowins(hand));
+  hand = "5H 5C 6S 7S KD 2C 3S 8S 8D TD";
   printf(" -> %d\n", whowins(hand));
   hand = "5D 8C 9S JS AC 2C 5C 7D 8S QH";
   printf(" -> %d\n", whowins(hand));
@@ -342,7 +408,9 @@ test()
   printf(" -> %d\n", whowins(hand));
   hand = "2H 2D 4C 4D 4S 3C 3D 3S 9S 9D";
   printf(" -> %d\n", whowins(hand));
+#endif
 }
+#endif
 
 int
 main(int argc, char *argv[])
@@ -351,8 +419,10 @@ main(int argc, char *argv[])
   FILE * fi = fopen(FILENAME, "r");
   int first_wins = 0;
 
-  //test();
-  //return 0;
+#ifdef TEST
+  test();
+  return 0;
+#endif
 
   if(fi == NULL) {
     FAIL("Can't open input file " FILENAME);
@@ -360,7 +430,11 @@ main(int argc, char *argv[])
 
   while(!feof(fi)) {
     if(fgets(line, BUFSZ,fi)==NULL) break;
-    if(whowins(line)==1) first_wins++;
+    int winner = whowins(line);
+    if(winner==1) first_wins++;
+#ifdef VERBOSE
+    printf("(%d) \n", winner);
+#endif
   }
   printf("%d\n", first_wins);
 
