@@ -6,7 +6,7 @@ all: $(APP)
 
 $(APP): $(OBJS)
 	$(CC) $(LDOPT) -o $(APP) $(OBJS) $(LIBS)
-	$(STRIP) $(APP)
+	#$(STRIP) $(APP)
 
 clean:
 	rm -rf $(APP) $(OBJS)
