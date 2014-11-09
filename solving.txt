@@ -1,0 +1,55 @@
+Short and incomplete list of problem solving techniques.
+
+Divide-and-conquer
+	Divide the problem into several smaller independent subproblems and
+	use solutions to solve the original problem.
+
+Reqursion, dynamic programming
+	Construct solution to bigger problem from smaller instances of the
+	same problem.
+
+Case analysis
+	Split input and execution into number of cases and solve each case
+	in isolation.
+
+Generalization
+	Apply solution to a more general problem to this specific case.
+
+Data-structures
+	Find a data structure that directly maps to your problem.
+
+Iterative refinement
+	Start with simple stupid bruteforce solution. Then iteratively
+	improve it.
+
+Small examples (induction?)
+	Find solution to concrete instances of a problem and then build
+	generalized to arbitrary number of instances.
+
+Reduction
+	Use solved problem as a subroutine.
+
+Graph modelling
+	Describe in terms of graph theory and apply known algorithms.
+
+Write an equation
+	Describe problem in terms of (in)equlaities.
+
+Auxiliary elements
+	Add something new into problem to convert it into a known one.
+
+Variation
+	Solve slightly different problem and convert that solution to
+	your problem.
+
+Parallelism
+	Decompose into independent subproblems and execute on several
+	machines.
+
+Caching
+	Store some of computation for future use.
+
+Symmetry
+	Find a symmetry in the input or solution to help you find solution.
+
+
