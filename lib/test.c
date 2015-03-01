@@ -21,6 +21,41 @@ static void allocated_ok(struct large *num, int cap, int len)
   ASSERT(num->buffer != NULL);
 }
 
+static void
+test_small()
+{
+  struct large *n;
+
+  n=large_from_int(10, 1);
+  if(large_len(n) != 1 )FAIL("1");
+  large_free(n);
+  n=large_from_int(10, 42);
+  if(large_len(n) !=2 )FAIL("42");
+  large_free(n);
+  n=large_from_int(10, 221);
+  if(large_len(n)!=3)FAIL("221");
+  large_free(n);
+  n = large_from_int(10, 7770);
+  if(large_len(n)!=4)FAIL("7770");
+  large_free(n);
+
+  n=large_pow(2,3);
+  if(large_coerce(n) != 8) FAIL("2^3");
+  large_free(n);
+  n=large_pow(1, 10);
+  if(large_coerce(n) != 1) FAIL("1^10");
+  large_free(n);
+  n=large_pow(3, 3);
+  if(large_coerce(n) != 27) FAIL("3^3");
+  n=large_pow(12, 2);
+  if(large_coerce(n) != 144) FAIL("12^2");
+  large_free(n);
+
+  n=large_pow(7,5);
+  if(large_coerce(n) != 16807) FAIL("7^5");
+  large_free(n);
+}
+
 int
 main(int argc, char *argv[])
 {
