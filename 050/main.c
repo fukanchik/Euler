@@ -5,6 +5,7 @@
 static int
 isprime(prime_list_t *primes, int num)
 {
+  /* TODO: replace with library primes_is_prime*/
 	int i;
 
 	for(i=primes->count - 1;primes->primes[i] >= num && i>=0;--i)

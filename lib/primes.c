@@ -96,6 +96,7 @@ primes_init_fill( prime_list_t * list, int size )
 int
 primes_is_prime( prime_list_t * list, int num )
 {
+  /* TODO: if num <= list->primes[max], then do binary search in the list. */
 	int half = sqrt(num) + 1;
 	int i;
 
