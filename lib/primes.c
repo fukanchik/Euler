@@ -18,7 +18,7 @@ primes_init( prime_list_t * list, int size )
 }
 
 void
-primes_for_each( prime_list_t * list, int (*f)(prime_list_t*, int prime, void * arg), void * arg)
+primes_for_each( prime_list_t * list, int (*f)(const prime_list_t* const, int prime, void * arg), void * arg)
 {
 	int i;
 
@@ -30,7 +30,7 @@ primes_for_each( prime_list_t * list, int (*f)(prime_list_t*, int prime, void * 
 }
 
 void
-primes_for_each_simple(prime_list_t * list, int (*f)(prime_list_t*, int prime) )
+primes_for_each_simple(prime_list_t * list, int (*f)(const prime_list_t* const, int prime) )
 {
 	int i;
 
@@ -43,7 +43,7 @@ primes_for_each_simple(prime_list_t * list, int (*f)(prime_list_t*, int prime) )
 
 
 void
-primes_for_each_extra( int start, int end, prime_list_t * list, int (*f)(prime_list_t*, int position, int prime, void * arg), void * arg)
+primes_for_each_extra( int start, int end, prime_list_t * list, int (*f)(const prime_list_t* const, int position, int prime, void * arg), void * arg)
 {
 	int i;
 
@@ -94,7 +94,7 @@ primes_init_fill( prime_list_t * list, int size )
 
 
 int
-primes_is_prime( prime_list_t * list, int num )
+primes_is_prime( const prime_list_t * const list, int num )
 {
   /* TODO: if num <= list->primes[max], then do binary search in the list. */
 	int half = sqrt(num) + 1;

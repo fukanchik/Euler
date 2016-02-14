@@ -2,82 +2,131 @@
 #include <string.h>
 #include <euler/config.h>
 #include <euler/primes.h>
+#include <stdlib.h>
+#include <euler/number.h>
 
 #define MAXPRIME 1000000
 
-#define NGROUPS 100
 prime_list_t primes;
-int groups[NGROUPS];
 
-static int
-numlen(ULL i)
+void explode(int num, int *buf, int len);
+int implode(int *buf, int len);
+int allbits(int len);
+int find_groups(const prime_list_t * const pl, int prime);
+static void __set(int *buf, int len, int digit, int mask);
+int set(int prime, int len, int digit, int mask);
+
+
+void
+explode(int num, int *buf, int len)
 {
-  int len = 0;
+  int i;
 
-  while(i > 0) {
-    len++;
-    i /= 10;
-  }
-  return len;
+  for(i = 0; i < len; ++i)
+    {
+      buf[i] = num % 10;
+      num /= 10;
+    }
+}
+
+int
+implode(int *buf, int len)
+{
+  int i;
+  int ret = 0;
+
+  for(i = len - 1; i >= 0; --i)
+    {
+      ret *= 10;
+      ret += buf[i];
+    }
+  return ret;
+}
+
+int
+allbits(int len)
+{
+  int mask = 1;
+  int ret = 0;
+  int i;
+
+  for(i = 0; i < len; ++i)
+    {
+      ret |= mask;
+      mask = mask << 1;
+    }
+  return ret;
 }
 
 static void
-numtobuf(int prime, int *buf, int len)
+__set(int *buf, int len, int digit, int mask)
 {
-  int i;
+  int pos;
+  int v = 1;
 
-  for(i = 0; (prime > 0) && (i < len); ++i) {
-    buf[i] = prime % 10;
-    prime = prime / 10;
-  }
-}
-
-static int
-find_groups(prime_list_t* primes, int pos, int prime, void *arg)
-{
-  int *groups = (int*)arg;
-  int len = numlen(prime);
-
-  groups[1]=0;
-  if(groups[len] == 0) {
-    groups[len]=pos;
-  }
-
-  if(len >= NGROUPS) return 1;
-
-  return 0;
-}
-
-struct search
-{
-  int len;
-
-  int slotslen;
-  int *slots;
-  int digit;
-
-  int count;
-  int *fixedpos, *fixed, fixedlen;
-};
-
-static int
-filter_out(prime_list_t * primes, int pos, int prime, void * arg)
-{
-  struct search *s = (struct search*)arg;
-  int i;
-  
-  int buf[s->len];
-  numtobuf(prime, buf, s->len);
-
-  for(i=0;i<s->fixedlen;++i) {
-    if(buf[s->fixedpos[i]] != s->fixed[s->fixedpos[i]]) return 0;
-  }
-  for(i=0; i < s->slotslen;++i) {
-    if(buf[s->slots[i]] != s->digit) {
-      return 0;
+  for(pos = 0; pos < len; ++pos)
+    {
+      if(mask & v)
+	{
+	  buf[pos] = digit;
+	}
+      v = v<<1;
     }
-  }
-  s->count++;
+}
+
+int
+set(int prime, int len, int digit, int mask)
+{
+  int buf[100];
+  memset(buf, 0, sizeof(int) * 100);
+
+  explode(prime, buf, len);
+  __set(buf, len, digit, mask);
+  return implode(buf, len);
+}
+
+int
+find_groups(const prime_list_t * const pl, int prime)
+{
+  int len = num_len(prime);
+  int mask_max = allbits(len - 1);
+
+  int i;
+  for(i = 1;i <= mask_max; ++i)
+    {
+      int mask = i << 1;// We need /2 times. leftmost gives only 1,3,7,9
+      int count = 0;
+      int hits[10];
+      int digit;
+
+      memset(hits, 0, sizeof(int) * 10);
+      for(digit = 0;digit <= 9; ++digit)
+	{
+	  int num = set(prime, len, digit, mask);
+	  if(num_len(num) != len)
+	    {
+	      continue;
+	    }
+	  if(primes_is_prime(pl, num))
+	    {
+	      count++;
+	      hits[digit]++;
+	    }
+	}
+      if(count == 8)
+	{
+	  int m;
+	  for(m = 0; m < 10; ++m)
+	    {
+	      if(hits[m] != 0)
+		{
+		  int num = set(prime, len, m, mask);
+		  printf("%d\n", num);
+		  return 1;
+		}
+	    }
+	}
+    }
 
   return 0;
 }
@@ -85,49 +134,9 @@ filter_out(prime_list_t * primes, int pos, int prime, void * arg)
 int
 main(int argc, char *argv[])
 {
-  int len, j;
-
   primes_init_fill(&primes, MAXPRIME);
 
-  primes_for_each_extra(0, MAXPRIME, &primes, find_groups, groups);
-
-  int maxcount=0;
-  int maxfixed[6];
-
-#define SLOTSLEN 3
-  for(len = 5; len < 6; ++len) {
-    for(j=groups[len];j<groups[len+1];++j) {
-      struct search s;
-      int prime = primes.primes[j];
-      //KNOWN: int slots[SLOTSLEN]={1,2};
-      //int fixedpos[3]={0,3,4};
-      int slots[SLOTSLEN]={0,1,4};
-      int fixedpos[2]={2,3};
-      int fixed[5];
-      int i;
-
-      numtobuf(prime, fixed, 5);
-
-      s.slotslen=SLOTSLEN;
-      s.slots = slots;
-      s.len=len;
-      s.fixedpos=fixedpos;
-      s.fixed=fixed;
-      s.fixedlen=s.len-s.slotslen;
-      s.count=0;
-
-      for(i=0;i<=9;++i) {
-	s.digit = i;
-	primes_for_each_extra(groups[len], groups[len+1], &primes, filter_out, &s);
-      }
-      if(s.count>maxcount) {
-	memcpy(maxfixed, fixed, len*sizeof(int));
-	maxcount=s.count;
-      }
-    }
-  }
-
-  printf("maxcount=%d [%d%d%d%d%d]\n", maxcount, maxfixed[0], maxfixed[1], maxfixed[2], maxfixed[3], maxfixed[4]);
+  primes_for_each_simple(&primes, find_groups);
 
   return 0;
 }
