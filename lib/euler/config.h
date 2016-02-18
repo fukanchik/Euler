@@ -7,6 +7,8 @@ typedef unsigned long long ULL;
 #endif
 #define ULL_DEFINED
 
+typedef unsigned char u1;
+
 #ifndef _WIN32
 #define O_BINARY 0
 #endif
