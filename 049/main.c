@@ -4,6 +4,7 @@
 
 #include <euler/assert.h>
 #include <euler/config.h>
+#include <euler/number.h>
 
 #define PRIMESINPUT "primes1.txt"
 
@@ -28,27 +29,6 @@ read_primes()
   }
   printf(ULLFMT "\n", primes[NPRIM-1]);
   fclose(fi);
-}
-
-static int
-ispermutation(int n1, int n2)
-{
-  int nums1[10], nums2[10];
-
-  memset(nums1, 0, sizeof(nums1));
-  memset(nums2, 0, sizeof(nums2));
-
-  while(n1) {
-    int digit = n1 % 10;
-    n1 /= 10;
-    nums1[digit]++;
-  }
-  while(n2) {
-    int digit = n2 % 10;
-    n2 /= 10;
-    nums2[digit]++;
-  }
-  return !memcmp(nums1, nums2, sizeof(nums1));
 }
 
 static int
@@ -78,11 +58,11 @@ hasprop(int n)
     return 0;
   if(!isprime(n3))
     return 0;
-  if(!ispermutation(n1, n2))
+  if(!is_permutation(n1, n2))
     return 0;
-  if(!ispermutation(n1, n3))
+  if(!is_permutation(n1, n3))
     return 0;
-  if(!ispermutation(n2, n3))
+  if(!is_permutation(n2, n3))
     return 0;
   return 1;
 }
@@ -94,11 +74,11 @@ main(int c, char *v[])
 
   read_primes();
 
-  if(!ispermutation(1487, 4817)) {
+  if(!is_permutation(1487, 4817)) {
     fprintf(stderr, "!isperm(1487, 4817)\n");
     return -1;
   }
-  if(ispermutation(1487, 4816)) {
+  if(is_permutation(1487, 4816)) {
     fprintf(stderr, "isperm(1487, 4816)\n");
     return -1;
   }

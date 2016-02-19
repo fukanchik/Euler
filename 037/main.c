@@ -3,11 +3,11 @@
 #include <euler/primes.h>
 #include <euler/reverse.h>
 
-int sum = 0;
-int count=0;
+static int sum = 0;
+static int count=0;
 
 static int
-check_trunc(prime_list_t *list, int prime )
+check_trunc(const prime_list_t * const list, int prime )
 {
 	int primeo = prime;
 	int rev = reverse(prime);
