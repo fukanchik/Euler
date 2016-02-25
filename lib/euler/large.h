@@ -30,8 +30,11 @@ int large_is_palindrome(struct large* src);
 void large_set(struct large*, int num);
 int large_coerce(struct large*);
 
+  /* top = top  - bot */
 void large_sub(struct large* top, struct large* bot);
+  /* n1 = n1 + n2 */
 void large_add(struct large* n1, struct large* n2);
+  /* n1 = n1 * n2 */
 void large_mul(struct large* n1, struct large* n2);
 struct large* large_div(struct large* top, struct large* bot);
 struct large* large_pow(int base, int expo);

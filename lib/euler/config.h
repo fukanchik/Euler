@@ -1,8 +1,10 @@
 #ifdef _WIN32
 typedef __int64 ULL;
+typedef __int64 u8;
 #define ULLFMT "%I64u"
 #else
 typedef unsigned long long ULL;
+typedef unsigned long long u8;
 #define ULLFMT "%llu"
 #endif
 #define ULL_DEFINED
