@@ -17,3 +17,7 @@ uno: all
 	echo "UNO"
 	@$(foreach f, $(basename $(wildcard [0-9][0-9][0-9])), echo "Entering $f"; cd $f; make uno; cd ..;)
 
+valgrind: all
+	echo "valgrind"
+	@$(foreach f, $(basename $(wildcard [0-9][0-9][0-9])), echo "Entering $f"; cd $f; make valgrind; cd ..;)
+

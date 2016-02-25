@@ -26,6 +26,7 @@ int large_len(struct large* l);
 int large_iszero(struct large* num);
 int large_compare(struct large* n1, struct large* n2);
 int large_is_palindrome(struct large* src);
+int large_sumdigits(struct large* src);
 
 void large_set(struct large*, int num);
 int large_coerce(struct large*);

@@ -192,3 +192,22 @@ main(int argc, char *argv[])
 
   return 0;
 }
+
+void
+test_large()
+{
+  struct large *n1 = large_new(10);
+  struct large *n2 = large_new(10);
+
+  n1->buffer[0]=0;
+  n2->buffer[0]=3;
+
+  large_free(n1);
+  large_free(n2);
+  n1 = large_new(1000);
+  n2 = large_new(1000);
+  n1->buffer[0]=1;
+  n1->buffer[1]=0;
+  n2->buffer[0]=2;
+  n2->buffer[1]=0;
+}

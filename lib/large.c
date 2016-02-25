@@ -18,11 +18,11 @@ struct large*
 large_new(int capacity)
 {
 	struct large* ret = malloc(sizeof(struct large));
-	ret->buffer = malloc(capacity + 1);
+	ret->buffer = malloc(sizeof(char) * (capacity + 1));
 	ret->capacity = capacity;
 	ret->len = 1;
 
-	memset(ret->buffer, 0, capacity + 1);
+	memset(ret->buffer, 0, sizeof(char) * (capacity + 1));
 
 	return ret;
 }
@@ -30,7 +30,9 @@ large_new(int capacity)
 void
 large_free(struct large* l)
 {
+  memset(l->buffer, 0, sizeof(char) * l->capacity);
   free(l->buffer);
+  l->buffer = NULL;
   free(l);
 }
 
@@ -159,6 +161,19 @@ large_reverse(struct large *src)
   ret->len = src->len;
 
   return ret;
+}
+
+int
+large_sumdigits(struct large* src)
+{
+  int sum = 0;
+  int i;
+
+  for(i = 0; i < src->len; ++i)
+    {
+      sum += src->buffer[i];
+    }
+  return sum;
 }
 
 void

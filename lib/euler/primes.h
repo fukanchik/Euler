@@ -13,6 +13,8 @@ typedef struct
 } prime_list_t;
 
 void primes_init_fill( prime_list_t * list, int size );
+void primes_free(prime_list_t * list);
+
 int primes_is_prime( const prime_list_t * const list, int num );
 
 void primes_for_each( prime_list_t * list, int (*f)(const prime_list_t * const, int prime, void * arg), void * arg);

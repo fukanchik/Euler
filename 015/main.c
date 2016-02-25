@@ -60,5 +60,8 @@ main(int argc, char* argv[])
 	/*pascal_triangle_print(tr);*/
 	printf(ULLFMT"\n", tr->numbers[20]);
 
+	free(tr->numbers);
+	free(tr);
+
 	return 0;
 }

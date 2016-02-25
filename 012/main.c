@@ -10,41 +10,44 @@ static prime_list_t primes;
 static int
 numdivs3(int num)
 {
-	int i;
-	int numdivs = 1;
+  int i;
+  int numdivs = 1;
 
-	for(i = 0;  i < primes.count; ++i)
+  for(i = 0;  i < primes.count; ++i)
+    {
+      int count = 0;
+
+      while(num % primes.primes[i]==0)
 	{
-		int count = 0;
-
-		while(num % primes.primes[i]==0)
-		{
-			count++;
-			num /= primes.primes[i];
-		}
-		if(count != 0)
-		{
-			 numdivs *= count + 1;
-		}
+	  count++;
+	  num /= primes.primes[i];
 	}
-	return numdivs;
+      if(count != 0)
+	{
+	  numdivs *= count + 1;
+	}
+    }
+  return numdivs;
 }
 
 int
 main(int argc, char* argv[])
 {
-	int i;
-	int triangle_number;
+  int i;
+  int triangle_number;
 
-	primes_init_fill(&primes, sqrt(MAXNUM)+1);
+  primes_init_fill(&primes, sqrt(MAXNUM) + 1);
 
-	for(triangle_number = 0, i = 1; i < MAXNUM; ++i)
-	{
-		triangle_number += i;
-		if(numdivs3(triangle_number) > 500) {
-			printf("%d\n", triangle_number);
-			return 0;
-		}
-	}
-	return 0;
+  for(triangle_number = 0, i = 1; i < MAXNUM; ++i)
+    {
+      triangle_number += i;
+      if(numdivs3(triangle_number) > 500) {
+	printf("%d\n", triangle_number);
+	break;
+      }
+    }
+
+  primes_free(&primes);
+
+  return 0;
 }

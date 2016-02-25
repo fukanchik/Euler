@@ -18,6 +18,17 @@ primes_init( prime_list_t * list, int size )
 }
 
 void
+primes_free(prime_list_t * list)
+{
+  if(list)
+    {
+      memset(list->primes, 0, sizeof(int) * list->total);
+      free(list->primes);
+      list->primes = NULL;
+    }
+}
+
+void
 primes_for_each( prime_list_t * list, int (*f)(const prime_list_t* const, int prime, void * arg), void * arg)
 {
 	int i;
