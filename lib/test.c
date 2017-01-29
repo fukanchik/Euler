@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include <euler/number.h>
 #include <euler/large.h>
 #include <euler/assert.h>
 
@@ -19,6 +20,32 @@ static void allocated_ok(struct large *num, int cap, int len)
   ASSERT(num->capacity == cap);
   ASSERT(num->len == len);
   ASSERT(num->buffer != NULL);
+}
+
+void
+test_large()
+{
+  struct large *n1 = large_new(10);
+  struct large *n2 = large_new(10);
+
+  n1->buffer[0]=0;
+  n2->buffer[0]=3;
+
+  large_free(n1);
+  large_free(n2);
+  n1 = large_new(1000);
+  n2 = large_new(1000);
+  n1->buffer[0]=1;
+  n1->buffer[1]=0;
+  n2->buffer[0]=2;
+  n2->buffer[1]=0;
+}
+
+static void
+test_gcd()
+{
+  ASSERT(21 == gcd(1071, 462));
+  ASSERT(1 == gcd(700000, 299997));
 }
 
 static void
@@ -63,6 +90,8 @@ main(int argc, char *argv[])
   struct large * l10 = large_from_int(100, 10);
   struct large * lclone = large_clone(l10);
   struct large * l10rev;
+
+  test_gcd();
 
   ASSERT(1 == large_coerce(large_one));
   ASSERT(10 == large_coerce(large_ten));
@@ -191,23 +220,4 @@ main(int argc, char *argv[])
   printf("Ok\n");
 
   return 0;
-}
-
-void
-test_large()
-{
-  struct large *n1 = large_new(10);
-  struct large *n2 = large_new(10);
-
-  n1->buffer[0]=0;
-  n2->buffer[0]=3;
-
-  large_free(n1);
-  large_free(n2);
-  n1 = large_new(1000);
-  n2 = large_new(1000);
-  n1->buffer[0]=1;
-  n1->buffer[1]=0;
-  n2->buffer[0]=2;
-  n2->buffer[1]=0;
 }

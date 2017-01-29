@@ -15,8 +15,11 @@ $(LIB): $(OBJS)
 	ar rc $(LIB) $(OBJS)
 
 clean:
-	rm -rf $(LIB) $(OBJS)
+	rm -rf $(LIB) $(OBJS) test
 
 test: $(TESTOBJS) $(LIB)
 	$(CC) $(LDOPT) -o test $(TESTOBJS) $(LIBS)
+
+test.o: test.c
+	$(CC) $(CFLAGS) -c -o test.o test.c
 

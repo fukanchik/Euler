@@ -2,7 +2,8 @@
 #include <euler/assert.h>
 #include <euler/number.h>
 
-int num_len(int num)
+int
+num_len(int num)
 {
   int len = 1;
   for(;num >= 10;len++) {
@@ -11,16 +12,45 @@ int num_len(int num)
   return len;
 }
 
-int num_upto(int num)
+int
+num_upto(int num)
 {
   int ret = 1;
   while(ret <= num) ret *= 10;
   return ret;
 }
 
-int num_concat(int n1, int n2)
+int
+num_concat(int n1, int n2)
 {
   return n1 * num_upto(n2) + n2;
+}
+
+void
+swap(int *i1, int *i2)
+{
+  int tmp = *i1;
+  *i1 = *i2;
+  *i2 = tmp;
+}
+
+//#include <stdio.h>
+int
+gcd(int n1, int n2)
+{
+  int prev = -1;
+
+  while(n1 > 0)
+    {
+      prev = n1;
+      while(n1 && n2 && n1 >= n2)
+        {
+          //printf("%d %d\n", n1, n2);
+          n1 = n1 - n2;
+        }
+      swap(&n1, &n2);
+    }
+  return prev;
 }
 
 #if 0

@@ -5,6 +5,7 @@
 #endif
 #include <malloc.h>
 #include <math.h>
+#include <string.h>
 
 #include <euler/config.h>
 #include <euler/primes.h>

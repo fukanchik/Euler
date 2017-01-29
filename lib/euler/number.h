@@ -31,3 +31,8 @@ int num_concat(int n1, int n2);
 
 /* Test if n1 is permutation of n2. */
 int is_permutation(int n1, int n2);
+
+/* GCD */
+int gcd(int n1, int n2);
+
+void swap(int *i1, int *i2);
