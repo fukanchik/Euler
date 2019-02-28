@@ -36,3 +36,7 @@ int is_permutation(int n1, int n2);
 int gcd(int n1, int n2);
 
 void swap(int *i1, int *i2);
+
+/* Integer power */
+int ipow(int m, int n);
+

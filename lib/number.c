@@ -53,6 +53,16 @@ gcd(int n1, int n2)
   return prev;
 }
 
+int
+ipow(int m, int n)
+{
+    int ret = 1; /* m^0 */
+
+    for(int i=0;i<n;++i) ret *= m;
+
+    return ret;
+}
+
 #if 0
   printf("%d,\t%d,\t%d,\t%d,\t%d,\t%d\n", 0, 2, 7, 10, 21, 133);
   printf("%d,\t%d,\t%d,\t%d,\t%d,\t%d\n", num_len(0), num_len(2), num_len(7), num_len(10), num_len(21), num_len(133));
