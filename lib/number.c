@@ -34,9 +34,20 @@ swap(int *i1, int *i2)
   *i2 = tmp;
 }
 
-//#include <stdio.h>
 int
-gcd(int n1, int n2)
+gcd(int x, int y)
+{
+    while(y>0)
+    {
+        int t = y;
+        y = x % y;
+        x = t;
+    }
+    return x;
+}
+
+int
+gcd3(int n1, int n2)
 {
   int prev = -1;
 
@@ -45,7 +56,6 @@ gcd(int n1, int n2)
       prev = n1;
       while(n1 && n2 && n1 >= n2)
         {
-          //printf("%d %d\n", n1, n2);
           n1 = n1 - n2;
         }
       swap(&n1, &n2);
