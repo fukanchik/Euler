@@ -35,6 +35,8 @@ int main(int argc, char *argv[])
   struct large* ln = large_new(SIZE);
 
   int i;
+
+  large_fibo_init();
 #define TOP 1000000000
   for(i=1;i <= TOP;++i) {
     large_fibo(ln, i);

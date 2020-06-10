@@ -24,7 +24,11 @@ large_fibo(struct large* out, int num)
 {
   int i;
 
-  if(num==0||num==1||num==2) {
+  if(num==0) {
+    large_set(out, 0);
+    return;
+  }
+  if(num==1||num==2) {
     large_set(out, 1);
     return;
   }
