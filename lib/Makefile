@@ -3,7 +3,7 @@
 #
 LIB=libueuler.a
 OBJS=palindrome.o large.o primes.o reverse.o pandigital.o assert.o
-OBJS+=ullrev.o ullpal.o number.o perm.o totient.o
+OBJS+=ullrev.o ullpal.o number.o perm.o totient.o fibo.o
 
 TESTOBJS=test.o
 
