@@ -28,31 +28,57 @@ cache_fibo(int nmax)
     }
 }
 
-struct large *
-s(int n)
+static struct large *
+s(struct large *n)
 {
-    int i;
-    int x = n / 9;
-    int r = n % 9;
-
-    struct large * ret = large_new(SIZE);
-    struct large * ten = large_new(SIZE);
+    struct large *one = large_new(SIZE);
+    large_set(one, 1);
     struct large * nine = large_new(SIZE);
-
-    large_set(ret, r);
-    large_set(ten, 10);
     large_set(nine, 9);
+    struct large * ten = large_new(SIZE);
+    large_set(ten, 10);
 
-    for(i=0; i < x; ++i)
+    struct large *n0 = large_clone(n);
+    struct large * x = large_div(n0, nine, NULL);
+    struct large *tmp =large_clone(x);
+    large_mul(tmp, nine);
+    struct large * r = large_clone(n);
+    large_mul(r, tmp);
+    large_free(tmp);
+    struct large * ret = large_new(SIZE);
+
+    large_copy(ret, r);
+
+    printf(" n=");
+    large_print(n);
+    printf(" x=");
+    large_print(x);
+    printf(" r=");
+    large_print(r);
+    printf("\n");
+    exit(0);
+
+    struct large *i = large_new(SIZE);
+    large_set(i, 0);
+    for( ; large_compare(i, x) < 0 ; )
     {
         large_mul(ret, ten);
         large_add(ret, nine);
+
+        large_add(i, one);
+
+        large_print(i);
+        printf(",");
+        large_print(x);
+        printf(" ");
+        large_print(ret);
+        printf("\n");
     }
 
     return ret;
 }
 
-struct large *
+static struct large *
 S(struct large *k)
 {
     struct large *i = large_new(SIZE);
@@ -81,6 +107,7 @@ F()
     for(i=2;i<=90;++i)
     {
         printf("%d\n", i);
+        fflush(stdout);
         struct large *f = fibo_cache[i];
         large_add(ret, S(f));
     }
@@ -88,14 +115,18 @@ F()
 
 int
 main(int argc, char* argv[])
-{   
+{
+    struct large *ten = large_new(2);
+    struct large *twenty= large_new(2);
     large_fibo_init();
     cache_fibo(90);
+    large_set(ten, 10);
+    large_set(twenty, 20);
 
-    struct large * t = s(10);
+    struct large * t = s(ten);
     large_print(t);
     printf("\n");
-    t = s(20);
+    t = s(twenty);
     large_print(t);
     printf("\n");
 

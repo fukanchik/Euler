@@ -18,11 +18,14 @@ struct large*
 large_new(int capacity)
 {
 	struct large* ret = malloc(sizeof(struct large));
-	ret->buffer = malloc(sizeof(char) * (capacity + 1));
+	ret->buffer = malloc(capacity + 1);
+    if(!ret->buffer) {
+        FAIL("malloc");
+    }
 	ret->capacity = capacity;
 	ret->len = 1;
 
-	memset(ret->buffer, 0, sizeof(char) * (capacity + 1));
+	memset(ret->buffer, 0, capacity + 1);
 
 	return ret;
 }
@@ -30,13 +33,14 @@ large_new(int capacity)
 void
 large_free(struct large* l)
 {
-  memset(l->buffer, 0, sizeof(char) * l->capacity);
+  memset(l->buffer, 0, l->capacity + 1);
   free(l->buffer);
   l->buffer = NULL;
   free(l);
 }
 
-struct large* large_from_int(int capacity, int val)
+struct large*
+large_from_int(int capacity, int val)
 {
   struct large* ret = large_new(capacity);
 
@@ -229,7 +233,7 @@ large_compare(struct large* n1, struct large* n2)
 	int count;
 	int i;
 
-	if(n1==NULL||n2==NULL)return 0;
+	if(n1==NULL||n2==NULL) return 0;
 
 	count = MAX(n1->len, n2->len);
 
@@ -309,6 +313,8 @@ large_div(struct large* top, struct large* bot)
   struct large* result = large_new(MAX(len_top, len_bot)*5);
   int cmp, plen;
 
+  large_set(result, 0);
+
   /* Divisor is zero. */
   if(large_iszero(bot))	{
     fprintf(stderr, "Division by zero\n");
@@ -320,6 +326,7 @@ large_div(struct large* top, struct large* bot)
   /* Divident is zero. */
   if(large_iszero(top))	{
     large_set(result, 0);
+
     return result;
   }
 
@@ -327,6 +334,7 @@ large_div(struct large* top, struct large* bot)
   if(len_top < len_bot)	{
     memset(top->buffer, 0, top->capacity);
     large_set(result, 0);
+
     return result;
   }
 
@@ -335,6 +343,7 @@ large_div(struct large* top, struct large* bot)
     /* Integer division. If divident is less than divisor we return 0. */
     memset(top->buffer, 0, top->capacity);
     large_set(result, 0);
+
     return result;
   }
 
@@ -345,7 +354,7 @@ large_div(struct large* top, struct large* bot)
   while(1) {
     int count;
 
-    n = large_new(top->capacity * 7);
+    n = large_new(MAX(bot->capacity, top->capacity) * 7);
     memcpy(n->buffer, bot->buffer, bot->capacity);
     n->len = bot->len;
     nn = large_clone(n);

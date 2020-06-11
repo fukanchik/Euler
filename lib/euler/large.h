@@ -20,7 +20,7 @@ void large_free(struct large*);
 
 void large_grow(struct large* l, int capacity);
 struct large* large_clone(struct large* l);
-  void large_copy(struct large* dst, const struct large* src);
+void large_copy(struct large* dst, const struct large* src);
 
 int large_len(struct large* l);
 int large_iszero(struct large* num);
