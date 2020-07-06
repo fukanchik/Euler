@@ -18,9 +18,12 @@ struct large*
 large_new(int capacity)
 {
 	struct large* ret = malloc(sizeof(struct large));
+    if(!ret) {
+        FAIL("malloc: large numer");
+    }
 	ret->buffer = malloc(capacity + 1);
     if(!ret->buffer) {
-        FAIL("malloc");
+        FAIL("malloc: large number buffer");
     }
 	ret->capacity = capacity;
 	ret->len = 1;
@@ -55,6 +58,9 @@ large_grow(struct large* l, int capacity)
   if(capacity < l->len) FAIL("Shrinking a number from %d to %d", l->len, capacity);
 
   char *b = malloc(capacity + 1);
+  if(!b) {
+    FAIL("malloc: growing large number");
+  }
 
   memset(b, 0, capacity + 1);
   memcpy(b, l->buffer, l->len);
@@ -437,10 +443,11 @@ large_factorial(int val)
 {
 	int i;
 	struct large* ret = large_new(val*val+10);
-	struct large* t = large_new(32);
 	large_set(ret, 1);
 
 	if(val==0||val==1) return ret;
+
+	struct large* t = large_new(32);
 	for(i=1;i <= val;++i)
 	{
 		large_set(t, i);
