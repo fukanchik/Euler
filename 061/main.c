@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#define MAXN 6
+
 int tri[10000];
 int square[10000];
 int penta[10000];
@@ -10,157 +12,172 @@ int octa[10000];
 
 void filltri()
 {
-int i;
-memset(tri, 0, sizeof(tri));
-for(i=44;i<140;++i)
-{
-int p=i*(i+1)/2;
-tri[p]=i;
-}
+  int i;
+
+  memset(tri, 0, sizeof(tri));
+
+  for(i = 44; i < 142; ++i)
+    {
+      int p=i*(i+1)/2;
+      tri[p]=i;
+    }
+  int c=0;
+  for(i=0;i<10000;++i) {
+    if(tri[i]!=0) c++;
+  }
 }
 
 void fillsquare()
-{int i;
-memset(square, 0, sizeof(square));
-for(i=31;i<100;++i)
 {
-int p=i*i;
-square[p]=i;
-}
+  int i;
+  memset(square, 0, sizeof(square));
+  for(i=31;i<100;++i)
+    {
+      int p=i*i;
+      square[p]=i;
+    }
+  int c=0;
+  for(i=0;i<10000;++i) {
+    if(square[i]!=0) c++;
+  }
 }
 
 void fillpenta()
 {
-int i;
-memset(penta, 0, sizeof(penta));
-for(i=25;i<81;++i)
-{
-int p=i*(3*i-1)/2;
-penta[p]=i;
-}
+  int i;
+  memset(penta, 0, sizeof(penta));
+  for(i=25;i<81;++i)
+    {
+      int p=i*(3*i-1)/2;
+      penta[p]=i;
+    }
+  int c=0;
+  for(i=0;i<10000;++i) {
+    if(penta[i]!=0) c++;
+  }
 }
 
 void fillhexa()
 {
-    int i;
-    memset(hexa,0, sizeof(hexa));
-    for(i=22;i<70;++i)
+  int i;
+  memset(hexa,0, sizeof(hexa));
+  for(i=22;i<70;++i)
     {
-        int p=i*(2*i-1);
-        hexa[p]=i;
+      int p=i*(2*i-1);
+      hexa[p]=i;
     }
 }
 
 void fillhepta()
 {
-    int i;
-    memset(hepta, 0, sizeof(hepta));
-    for(i=20;i<64;++i)
+  int i;
+  memset(hepta, 0, sizeof(hepta));
+  for(i=20;i<64;++i)
     {
-        int p=i*(5*i-3)/2;
-        hepta[p]=i;
+      int p=i*(5*i-3)/2;
+      hepta[p]=i;
     }
 }
 
 void fillocta()
 {
-    int i;
-    memset(octa, 0, sizeof(octa));
-    for(i=18;i<59;++i)
+  int i;
+  memset(octa, 0, sizeof(octa));
+  for(i=18;i<59;++i)
     {
-        int p=i*(3*i-2);
-        octa[p]=i;
+      int p=i*(3*i-2);
+      octa[p]=i;
     }
 }
 
-#define TRI 1
-#define SQ  2
-#define PEN 4
-#define HEX 8
-#define HEPTA 16
-#define OCTA 32
 
-void foo(int n, int bits, int *l, int p);
+int bar3(int *nums, int pos);
+int bar4(int *nums, int pos, int *busy, int bp);
 
-int seqs[10];
+int *ARRS[MAXN]={tri, square, penta, hexa, hepta, octa};
+int BPS[MAXN];
 
-void check(int k, int bits, int b, int *l, int p)
+void dump(int *num)
 {
-    int x=l[p];
-    for(int i=0;i<100;++i)
-    {
-        int v=k*100+i;
-        if(v<1000)continue;
-        l[p]=v;
-        seqs[p]=b;
-        foo(v, bits|b, l, p+1);
-    }
-    l[p]=x;
+  int i;
+  int sum=0;
+
+  for(i=0;i<MAXN;++i) {
+    sum+=num[i];
+  }
+  printf("%d\n", sum);
 }
 
-void foo(int n, int bits, int *l, int p)
+int bar4(int *nums, int pos, int *busy, int bp)
 {
-    if((bits&63)==63) {
-        if((l[0]/100)==(n%100)) {
-        int s=0;
-        for(int i=0;i<p;++i)
-        {
-            printf("%d ", l[i]);
-            s+=l[i];
-        }
-        printf("/");
-        for(int i=0;i<p;++i) {
-            int *a;
-            switch(seqs[i]) {
-            case TRI:
-                a=tri;
-                break;
-            default:
-                a=square;
-                break;
-            }
-            printf("%d(%d) /%p/", seqs[i], tri[l[i]], (void*)a);
-        }
-        printf(" : %d\n",s);
-        }
-        return;
+  int i;
+
+  busy[bp]=1;
+  int *arr=ARRS[bp];
+  BPS[pos]=bp;
+
+  int right = nums[pos-1] % 100;
+  if(pos==MAXN-1) {
+    int left=nums[0]/100;
+
+    int num=right*100+left;
+
+    if(arr[num]==0) {
+      BPS[pos]=0;
+      return 0;
     }
-    if((bits&TRI)==0 && tri[n]) {
-        check(n%100, bits, TRI, l, p);
+    nums[pos]=num;
+    dump(nums);
+    return 1;
+  }
+  for(i=right*100;i<(1+right)*100;++i) {
+    if(arr[i]==0) continue;
+    nums[pos]=i;
+    int j;
+    for(j=1;j<MAXN;++j) {
+      if(j==bp) continue;
+      int stop=0;
+      for(int k=0;k<MAXN;++k) if(BPS[k]==j) {stop=1;break;}
+      if(stop)continue;
+      if(bar4(nums, pos+1, busy, j)) return 1;
     }
-    if((bits&SQ)==0 && square[n]) {
-        check(n%100, bits, SQ, l, p);
+  }
+  BPS[pos]=0;
+  return 0;
+}
+
+int bar3(int *nums, int pos)
+{
+  int i;
+  int busy[MAXN]={0};
+  busy[0]=1;
+  BPS[0]=0;
+
+  for(i=1000;i<10000;++i) {
+    if(tri[i]==0) continue;
+    nums[pos]=i;
+    int j;
+    for(j=1;j<MAXN;++j) {
+      if(bar4(nums, pos+1, busy, j)) return 1;
     }
-    if((bits&PEN)==0 && penta[n]) {
-        check(n%100, bits, PEN, l, p);
-    }
-    if((bits&HEX)==0 && hexa[n]) {
-        check(n%100, bits, HEX, l, p);
-    }
-    if((bits&HEPTA)==0 && hepta[n]) {
-        check(n%100, bits, HEPTA, l, p);
-    }
-    if((bits&OCTA)==0 && octa[n]) {
-        check(n%100, bits, OCTA, l, p);
-    }
+  }
+  fprintf(stderr, "NOT FOUND\n");
+  return 0;
 }
 
 int
 main(int argc, char* argv[])
 {
-    int i;
-    int l[10]={-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-
     filltri();
     fillsquare();
     fillpenta();
     fillhexa();
     fillhepta();
     fillocta();
-    for(i=1000;i<10000;++i)
-    {
-        foo(i, 0, l, 0);
-    }
+
+    int NUMS[MAXN];
+    bar3(NUMS, 0);
+
 	return 0;
 }
 
