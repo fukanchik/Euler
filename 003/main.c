@@ -1,4 +1,7 @@
 #include <stdio.h>
+/*
+ * Divide number by primes up to the square root. Whatever remains is our answer.
+ */
 
 int
 main(int argc, char* argv[])

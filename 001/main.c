@@ -1,4 +1,9 @@
 #include <stdio.h>
+/*
+ * From 0 to NUM:
+ *  add 1 to the sum if number is either divisible by 5 or 3,
+ *  otherwise add 0.
+ */
 
 #define NUM 1000
 

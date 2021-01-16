@@ -1,137 +1,61 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <malloc.h>
-#include <euler/assert.h>
-#include <euler/large.h>
-#include <euler/fibo.h>
+#include <limits.h>
 
-#define SIZE 1000
-
-static struct large **fibo_cache;
+unsigned long long F[91];
 
 static void
-cache_fibo(int nmax)
+cache_fibo()
 {
-    int i;
-
-    fibo_cache = malloc(sizeof(struct large*) * (nmax+1) );
-    if(!fibo_cache) {
-        FAIL("NO MEM");
-    }
-
-    for(i = 0; i <= nmax; ++i)
-    {
-        fibo_cache[i] = large_new(SIZE);
-        if(!fibo_cache[i]) {
-            FAIL("NO MEM2");
-        }
-        large_fibo(fibo_cache[i], i);
-    }
+  F[0]=0;
+  F[1]=1;
+  for(int i=2;i<=90;++i) {
+    F[i]=F[i-1]+F[i-2];
+  }
 }
 
-static struct large *
-s(struct large *n)
+unsigned long long int dsum(unsigned long long int n)
 {
-    struct large *one = large_new(SIZE);
-    large_set(one, 1);
-    struct large * nine = large_new(SIZE);
-    large_set(nine, 9);
-    struct large * ten = large_new(SIZE);
-    large_set(ten, 10);
-
-    struct large *n0 = large_clone(n);
-    struct large * x = large_div(n0, nine);
-    struct large *tmp =large_clone(x);
-    large_mul(tmp, nine);
-    struct large * r = large_clone(n);
-    large_mul(r, tmp);
-    large_free(tmp);
-    struct large * ret = large_new(SIZE);
-
-    large_copy(ret, r);
-
-    printf(" n=");
-    large_print(n);
-    printf(" x=");
-    large_print(x);
-    printf(" r=");
-    large_print(r);
-    printf("\n");
-    exit(0);
-
-    struct large *i = large_new(SIZE);
-    large_set(i, 0);
-    for( ; large_compare(i, x) < 0 ; )
-    {
-        large_mul(ret, ten);
-        large_add(ret, nine);
-
-        large_add(i, one);
-
-        large_print(i);
-        printf(",");
-        large_print(x);
-        printf(" ");
-        large_print(ret);
-        printf("\n");
-    }
-
-    return ret;
+  unsigned long long int s = 0;
+  while(n>0) {
+    s+=n%10;
+    n/=10;
+  }
+  return s;
 }
 
-static struct large *
-S(struct large *k)
+unsigned long long int s(unsigned long long int n)
 {
-    struct large *i = large_new(SIZE);
-    struct large *res = large_new(SIZE);
-    struct large *one = large_new(SIZE);
-    large_set(res, 0);
-    large_set(one, 1);
-
-    large_set(i, 1);
-    for(; large_compare(i, k);)
-    {
-       struct large *p = s(i);
-        large_add(res, p);
-        large_add(i, one);
-    }
-    return res;
+  for(unsigned long long int i = 0; i < ULLONG_MAX; ++i) {
+    if(dsum(i)==n) return i;
+  }
+  return 0;
 }
 
-static void
-F()
+unsigned long long int S(unsigned long long int k)
 {
-    int i;
-
-    struct large* ret = large_new(SIZE);
-    large_set(ret, 0);
-    for(i=2;i<=90;++i)
-    {
-        printf("%d\n", i);
-        fflush(stdout);
-        struct large *f = fibo_cache[i];
-        large_add(ret, S(f));
-    }
+  unsigned long long int n;
+  unsigned long long int ret=0;
+  for(n=1;n<=k;++n) {
+    ret+=s(n);
+  }
+  return ret;
 }
 
 int
-main(int argc, char* argv[])
+main(int argc, char *argv[])
 {
-    struct large *ten = large_new(2);
-    struct large *twenty= large_new(2);
-    large_fibo_init();
-    cache_fibo(90);
-    large_set(ten, 10);
-    large_set(twenty, 20);
-
-    struct large * t = s(ten);
-    large_print(t);
-    printf("\n");
-    t = s(twenty);
-    large_print(t);
-    printf("\n");
-
-    F();
-
-	return 0;
+  cache_fibo();
+  for(int i=0;i<=90;++i) {
+    printf("%d: %llu %llu\n", i, F[i], dsum(F[i]));
+  }
+  printf("%llu\n", s(89));
+  return 0;
+  printf("   %llu\n", ULLONG_MAX);
+  printf("%llu\n", S(20));
+  
+  int i;
+  for(i=2;i<=90;++i) {
+    printf("%d: %llu %llu\n", i, F[i], S(F[i]));
+  }
+  return 0;
 }

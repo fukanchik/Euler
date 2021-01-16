@@ -1,4 +1,5 @@
-CFLAGS=-D_POSIX_C_SOURCE=200809L -O0 -ggdb -Wall -std=c99 -pedantic -I../lib
+FLAGS=-D_POSIX_C_SOURCE=200809L -O0 -ggdb -Wall -pedantic -I../lib
+CFLAGS=-std=c99 $(FLAGS)
 LDOPT=-O0 -ggdb
 
 #CFLAGS=-D_POSIX_C_SOURCE=200809L -O0 -pg -Wall -std=c99 -pedantic -I../lib
@@ -8,4 +9,4 @@ LDOPT=-O0 -ggdb
 #CXXFLAGS=-O3 -Wall -fomit-frame-pointer -pedantic -ansi -I../lib
 
 LIBS=-L../lib -lueuler -lm
-
+CXXFLAGS=$(FLAGS)

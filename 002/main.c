@@ -1,4 +1,7 @@
 #include <stdio.h>
+/*
+ * Generate Fibonacci, select even-valued terms and sum them up.
+ */
 
 int
 main(int argc, char* argv[])

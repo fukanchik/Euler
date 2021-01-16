@@ -2,7 +2,9 @@
 #include <string.h>
 
 #include <euler/palindrome.h>
-
+/*
+ * Exhaustive search as search space is tiny.
+ */
 int
 main(int argc, char* argv[])
 {
