@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <malloc.h>
 #include <euler/assert.h>
 #include <euler/large.h>
@@ -39,7 +40,7 @@ s(struct large *n)
     large_set(ten, 10);
 
     struct large *n0 = large_clone(n);
-    struct large * x = large_div(n0, nine, NULL);
+    struct large * x = large_div(n0, nine);
     struct large *tmp =large_clone(x);
     large_mul(tmp, nine);
     struct large * r = large_clone(n);
