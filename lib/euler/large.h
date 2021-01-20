@@ -42,6 +42,9 @@ struct large* large_pow(int base, int expo);
 struct large* large_factorial(int val);
 struct large* large_reverse(struct large *src);
 
+  void large_shift_left(struct large *l, int s);
+  void large_shift_right(struct large *l, int s);
+
 void large_print(struct large* n1);
 
 #ifdef __cplusplus

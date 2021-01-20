@@ -108,6 +108,21 @@ large_clone(struct large*l)
 	return ret;
 }
 
+void large_shift_right(struct large *l, int s)
+{
+  memcpy(l->buffer, l->buffer+s, l->capacity-s);
+  for(int i=l->len-s;i<l->len;++i) l->buffer[i]=0;
+  l->len -= s;
+}
+
+void large_shift_left(struct large *l, int s)
+{
+  memcpy(l->buffer+s, l->buffer, l->capacity-s);
+  for(int i=0;i<s;++i) {
+    l->buffer[i]=0;
+  }
+  l->len += s;
+}
 void
 large_set(struct large* l, int num)
 {
@@ -239,7 +254,7 @@ large_compare(struct large* n1, struct large* n2)
 	int count;
 	int i;
 
-	if(n1==NULL||n2==NULL) return 0;
+	if(n1 == NULL || n2 == NULL) return 0;
 
 	count = MAX(n1->len, n2->len);
 
