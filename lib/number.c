@@ -2,6 +2,8 @@
 #include <euler/assert.h>
 #include <euler/number.h>
 
+int gcd3(int n1, int n2);
+
 int
 num_len(int num)
 {

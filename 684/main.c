@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <limits.h>
 
+unsigned long long int dsum(unsigned long long int n);
+unsigned long long int s(unsigned long long int n);
+unsigned long long int S(unsigned long long int k);
+
 unsigned long long F[91];
 
 static void

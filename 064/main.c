@@ -3,6 +3,10 @@
 
 #define MAXN 1000
 
+int find(int m,int d, int a);
+int period(int s, int m, int d, int ap);
+int issquare(int n);
+
 int M[MAXN];
 int D[MAXN];
 int A[MAXN];
