@@ -331,10 +331,8 @@ large_div(struct large* top, struct large* bot)
   struct large* n, *nn;
   int len_top = top->len;
   int len_bot = bot->len;
-  struct large* result = large_new(MAX(len_top, len_bot)*5);
+  struct large* result;
   int cmp, plen;
-
-  large_set(result, 0);
 
   /* Divisor is zero. */
   if(large_iszero(bot))	{
@@ -343,6 +341,9 @@ large_div(struct large* top, struct large* bot)
     fprintf(stderr, "/0\n");
     abort();
   }
+
+  result = large_new(MAX(len_top, len_bot)*5);
+  large_set(result, 0);
 
   /* Divident is zero. */
   if(large_iszero(top))	{
@@ -375,6 +376,8 @@ large_div(struct large* top, struct large* bot)
   while(1) {
     int count;
 
+    if(n) large_free(n);
+    
     n = large_new(MAX(bot->capacity, top->capacity) * 7);
     memcpy(n->buffer, bot->buffer, bot->capacity);
     n->len = bot->len;

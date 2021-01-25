@@ -108,19 +108,16 @@ is_full_house(int hand[4][13])
 
   two = 0;
   three = 0;
-  ret = 0;
   for(kind = 0; kind < 13; ++kind) {
     int sum = hand[0][kind]+hand[1][kind]+hand[2][kind]+hand[3][kind];
     if(sum==2) {
       if(two) {
-	ret = 0;
 	break;
       }
       two=1;
     }
     if(sum==3) {
       if(three) {
-	ret=0;
 	break;
       }
       three=1;

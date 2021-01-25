@@ -159,6 +159,11 @@ bron_kerbosch_inner(int *matrix, int width, int *set_all, int *set_some, int *se
     set_diff(set_some, v);
     set_union(set_none, v);
   }
+
+  free(dest);
+  free(new_all);
+  free(new_some);
+  free(new_none);
 }
 
 static void
@@ -177,6 +182,10 @@ bron_kerbosch(int *matrix, int width)
   }
 
   bron_kerbosch_inner(matrix, width, set_all, set_some, set_none);
+
+  free(set_all);
+  free(set_some);
+  free(set_none);
 }
 
 int
@@ -189,6 +198,8 @@ main(int argc, char *argv[])
   bron_kerbosch(matrix, primes.count);
 
   free(matrix);
+
+  primes_free(&primes);
 
   return 0;
 }
