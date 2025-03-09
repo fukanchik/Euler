@@ -8,17 +8,17 @@
 int main(int argc, char *argv[])
 {
   struct large *n;
-  ULL i, j;
+  u8 i, j;
 
   for(i=1;i<100;++i) {
     for(j=0;;++j) {
-      ULL nlen;
+      u8 nlen;
       n = large_pow(j, i);
       nlen=large_len(n);
       if(nlen > i) break;
 
       if(nlen == i) {
-	printf(ULLFMT "^" ULLFMT "=" , j, i);
+	printf("%llu^%llu=" , j, i);
 	large_print(n);
 	printf("\n");
       }
@@ -27,4 +27,3 @@ int main(int argc, char *argv[])
   }
   return 0;
 }
-

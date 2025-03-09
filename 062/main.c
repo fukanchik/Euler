@@ -7,12 +7,12 @@
 
 static u1 cubes[NUMSLOTS][10];
 static u1 counts[NUMSLOTS];
-static ULL smalls[NUMSLOTS];
+static u8 smalls[NUMSLOTS];
 
 int
 main(int argc, char* argv[])
 {
-  ULL i;
+	u8 i;
   int done = 0;
   int j;
 
@@ -23,7 +23,7 @@ main(int argc, char* argv[])
   for(i = 0; !done && i < NUMSLOTS; i++)
     {
       u1 decomposed[10] = {0};
-      ULL cube = i * i * i;
+      u8 cube = i * i * i;
 
       //decompose
       while(cube != 0)
@@ -47,7 +47,7 @@ main(int argc, char* argv[])
 	      counts[j]++;
 	      if(counts[j] == 5)
 		{
-		  printf( ULLFMT "\n", smalls[j]);
+		  printf("%llu\n", smalls[j]);
 		  done = 1;
 		}
 	    }

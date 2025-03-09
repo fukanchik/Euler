@@ -8,8 +8,8 @@ int
 main(int argc, char* argv[])
 {
 	int add=2;
-	ULL sum = START;
-	ULL num = START;
+	u8 sum = START;
+	u8 num = START;
 	int i, j;
 
 	for(j=0;j<500;++j) {
@@ -20,6 +20,8 @@ main(int argc, char* argv[])
 		}
 		add += 2;
 	}
-	printf(ULLFMT"\n", sum);
+
+	printf("%llu\n", sum);
+
 	return 0;
 }

@@ -20,7 +20,7 @@ static void rec(int *p, int idx)
     int p0=primes.primes[p[0]];
     int p1=primes.primes[p[1]];
     int p2=primes.primes[p[2]];
-    ULL num = (p0*p0)+(p1*p1*p1)+(p2*p2*p2*p2);
+    u8 num = (p0*p0)+(p1*p1*p1)+(p2*p2*p2*p2);
     if(num>=LIMIT)return;
     if(!solutions[num])
       count++;

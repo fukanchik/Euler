@@ -3,13 +3,13 @@
 #
 LIB=libueuler.a
 OBJS=palindrome.o large.o primes.o reverse.o pandigital.o assert.o
-OBJS+=ullrev.o ullpal.o number.o perm.o totient.o fibo.o
+OBJS+=ullrev.o ullpal.o number.o perm.o totient.o fibo.o ifactors.o
 
 TESTOBJS=test.o
 
 include ../flags.mk
 
-all: $(LIB)
+all: $(LIB) test
 
 $(LIB): $(OBJS)
 	ar rc $(LIB) $(OBJS)
@@ -22,4 +22,3 @@ test: $(TESTOBJS) $(LIB)
 
 test.o: test.c
 	$(CC) $(CFLAGS) -c -o test.o test.c
-

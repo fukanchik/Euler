@@ -11,10 +11,10 @@
 #define NPRIM 1000000
 #define MAGIC 3330
 
-ULL primes[NPRIM];
+u8 primes[NPRIM];
 
 static void
-read_primes()
+read_primes(void)
 {
   int i;
   FILE *fi = fopen(PRIMESINPUT, "r");
@@ -25,14 +25,14 @@ read_primes()
   }
 
   for(i=0;!feof(fi) && i < NPRIM;++i) {
-    if(fscanf(fi, ULLFMT , primes+i) != 1) FAIL("Corrupted primes input file " PRIMESINPUT);
+    if(fscanf(fi, "%llu" , primes+i) != 1) FAIL("Corrupted primes input file " PRIMESINPUT);
   }
-  printf(ULLFMT "\n", primes[NPRIM-1]);
+  printf("%llu\n", primes[NPRIM-1]);
   fclose(fi);
 }
 
 static int
-isprime(ULL num)
+isprime(u8 num)
 {
   int i;
 

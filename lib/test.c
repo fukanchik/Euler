@@ -3,6 +3,7 @@
 #include <euler/number.h>
 #include <euler/large.h>
 #include <euler/assert.h>
+#include <euler/primes.h>
 
 static void
 __assert(int x, char *ln, char *file, int line)
@@ -23,7 +24,7 @@ static void allocated_ok(struct large *num, int cap, int len)
 }
 
 void
-test_large()
+test_large(void)
 {
   struct large *n1 = large_new(10);
   struct large *n2 = large_new(10);
@@ -42,14 +43,14 @@ test_large()
 }
 
 static void
-test_gcd()
+test_gcd(void)
 {
   ASSERT(21 == gcd(1071, 462));
   ASSERT(1 == gcd(700000, 299997));
 }
 
 static void
-test_small()
+test_small(void)
 {
   struct large *n;
 
@@ -83,6 +84,33 @@ test_small()
   large_free(n);
 }
 
+static void
+test_ifactors(void)
+{
+	prime_list_t primes;
+	primes_init_fill(&primes, 1000);
+	ifactors_map_t _if = ifactors(&primes, 42);
+	ASSERT(_if.nfactors == 3);
+	ASSERT(_if.primes[0]==2 && _if.powers[0] == 1);
+	ASSERT(_if.primes[1] == 3 && _if.powers[1] == 1);
+	ASSERT(_if.primes[2] == 7 && _if.powers[2] == 1);
+	ifactors_map_free(&_if);
+
+	_if = ifactors(&primes, 317);
+	ASSERT(_if.nfactors == 1);
+	ASSERT(_if.primes[0]==317 && _if.powers[0] == 1);
+	ifactors_map_free(&_if);
+
+	_if = ifactors(&primes, 312);
+	ASSERT(_if.nfactors == 3);
+	ASSERT(_if.primes[0]==2 && _if.powers[0] == 3);
+	ASSERT(_if.primes[1]==3 && _if.powers[1] == 1);
+	ASSERT(_if.primes[2]==13 && _if.powers[2] == 1);
+	ifactors_map_free(&_if);
+
+	primes_free(&primes);
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -91,6 +119,8 @@ main(int argc, char *argv[])
   struct large * lclone = large_clone(l10);
   struct large * l10rev;
 
+  test_ifactors();
+  test_small();
   test_gcd();
 
   ASSERT(1 == large_coerce(large_one));

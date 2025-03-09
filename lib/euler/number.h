@@ -39,4 +39,4 @@ void swap(int *i1, int *i2);
 
 /* Integer power */
 int ipow(int m, int n);
-
+long lpow(long m, long n);

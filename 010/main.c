@@ -5,7 +5,7 @@
 
 #define SIZE 2000000
 
-static ULL primes[SIZE];
+static u8 primes[SIZE];
 static int current;
 
 static int
@@ -26,7 +26,7 @@ isprime(int num)
 int
 main(int argc, char* argv[])
 {
-	ULL sum;
+	u8 sum;
 	int i;
 
 	primes[0]=2;
@@ -35,7 +35,7 @@ main(int argc, char* argv[])
 	for( sum = 2, i = 3; i < SIZE; i += 2)
 		sum += i * isprime(i);
 
-	printf(ULLFMT"\n", sum);
+	printf("%llu\n", sum);
 
 	return 0;
 }

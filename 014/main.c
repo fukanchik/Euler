@@ -2,8 +2,8 @@
 
 #include <euler/config.h>
 
-static ULL
-next(ULL c)
+static u8
+next(u8 c)
 {
 	if(c % 2 == 0)
 		return c / 2;
@@ -11,7 +11,7 @@ next(ULL c)
 	return 3 * c + 1;
 }
 
-static int len(ULL n)
+static int len(u8 n)
 {
 	int count = 0;
 	while(n > 1) {
@@ -24,7 +24,7 @@ static int len(ULL n)
 int
 main(int argc, char* argv[])
 {
-	ULL n = 13;
+	u8 n = 13;
 	int max=0;
 	int num = -1;
 	int i;
@@ -42,4 +42,3 @@ main(int argc, char* argv[])
 
 	return 0;
 }
-

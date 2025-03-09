@@ -12,7 +12,7 @@
 
 struct triangle
 {
-	ULL *numbers;
+	u8 *numbers;
 	int size;
 };
 
@@ -22,12 +22,14 @@ pascal_triangle(int size)
 	struct triangle* ret = (struct triangle*)malloc(sizeof(struct triangle));
 	int cs;
 
-	ret->numbers = (ULL*)malloc((size+1)*sizeof(ULL));
-	memset(ret->numbers, 0, (size+1)*sizeof(ULL));
+	ret->numbers = malloc((size+1)*sizeof(u8));
+	memset(ret->numbers, 0, (size+1)*sizeof(u8));
+
 	ret->size = size;
 	ret->numbers[0]=1;
 	ret->numbers[1]=1;
 	ret->numbers[2]=0;
+
 	for(cs=2;cs<size;++cs) {
 		int i;
 		for(i=cs;i>0;--i)
@@ -58,7 +60,7 @@ main(int argc, char* argv[])
 	struct triangle* tr = pascal_triangle(41);
 
 	/*pascal_triangle_print(tr);*/
-	printf(ULLFMT"\n", tr->numbers[20]);
+	printf("%llu\n", tr->numbers[20]);
 
 	free(tr->numbers);
 	free(tr);

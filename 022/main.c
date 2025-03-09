@@ -13,7 +13,7 @@
 #include <euler/config.h>
 #include <euler/assert.h>
 
-#define INFILE "names.txt" 
+#define INFILE "names.txt"
 
 static char**
 read_names()
@@ -24,7 +24,7 @@ read_names()
   char **ret;
   int sz=0;
 
-  fd=open(INFILE, O_RDONLY|O_BINARY);
+  fd=open(INFILE, O_RDONLY);
   if(fd == -1) FAIL("Can't open " INFILE);
   memset(buf, 0, sizeof(buf));
   if(read(fd, buf, 50000)==-1)FAIL("Can't read from "INFILE);
@@ -93,22 +93,22 @@ main(int argc, char* argv[])
   int count = count_names(names);
   qsort(names, count, sizeof(char*), comp);
   char**p=names;
-  ULL total=0;
+  u8 total=0;
   int pos=1;
   int i;
 
   while(*p) {
-    total+=calc(*p)*pos;
+    total += calc(*p)*pos;
     pos++;
     p++;
   }
-  printf(ULLFMT"\n", total);
-
+  printf("%llu\n", total);
 
   for(i=0;names[i];++i)
     {
       free(names[i]);
     }
+
   free(names);
 
   return 0;

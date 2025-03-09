@@ -2,10 +2,10 @@
 #include "euler/palindrome.h"
 
 int
-ull_is_pal(const ULL candidate, const int base)
+ull_is_pal(const u8 candidate, const int base)
 {
-	ULL num = candidate;
-	ULL n = 0;
+	u8 num = candidate;
+	u8 n = 0;
 
 	while(num)
 	{
@@ -15,4 +15,3 @@ ull_is_pal(const ULL candidate, const int base)
 
 	return candidate == n;
 }
-

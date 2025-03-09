@@ -3,15 +3,17 @@
 
 #define MAXNUM 100
 
-static int
-digitalsum(ULL a)
+static u8
+digitalsum(u8 a)
 {
-	int sum = 0;
+	u8 sum = 0;
+
 	for(;a;) {
-		ULL digit = a % 10;
+		u8 digit = a % 10;
 		a /= 10u;
 		sum += digit;
 	}
+
 	return sum;
 }
 
@@ -23,7 +25,7 @@ fordigits(int a, int b)
 	sum = 0;
 	for(;a;) {
 		int digit = a % 10;
-		ULL v = digit * b;
+		u8 v = digit * b;
 		a /= 10;
 		sum += digitalsum(v);
 	}
@@ -35,19 +37,19 @@ int
 main(int argc, char *argv[])
 {
 	int a, b, i;
-	ULL max;
+	u8 max;
 
 	printf(">> %d\n", fordigits(13, fordigits(13, fordigits(13, fordigits(13,13)))));
 
 	max = 0;
 	for(a=1;a<MAXNUM;a++) {
 		for(b=1;b<MAXNUM;b++) {
-			ULL sum = 0;
-			ULL n=a;
+			u8 sum = 0;
+			u8 n=a;
 			for(i=1;i<=b;++i) {
 				n=fordigits(a, n);
 				if(a==13 && b==5) {
-					printf("%d " ULLFMT " " ULLFMT "\n", i, n, sum);
+					printf("%d %llu %llu\n", i, n, sum);
 				}
 				sum += n;
 			}
@@ -55,7 +57,8 @@ main(int argc, char *argv[])
 			if(sum>max) max=sum;
 		}
 	}
-	printf(ULLFMT "\n", max);
+
+	printf("%llu\n", max);
+
 	return 0;
 }
-

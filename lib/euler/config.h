@@ -1,19 +1,9 @@
-#ifdef _WIN32
-typedef __int64 ULL;
-typedef __int64 u8;
-#define ULLFMT "%I64u"
-#else
-typedef unsigned long long ULL;
-typedef unsigned long long u8;
-#define ULLFMT "%llu"
+#ifdef __config_h__
+#error "Double inclusion of config.h"
 #endif
-#define ULL_DEFINED
 
 typedef unsigned char u1;
-
-#ifndef _WIN32
-#define O_BINARY 0
-#endif
+typedef unsigned long long u8;
 
 #define MAX(x,y) ((x)>(y)?(x):(y))
 #define MIN(x,y) ((x)<(y)?(x):(y))

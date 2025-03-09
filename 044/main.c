@@ -7,11 +7,11 @@
 
 #define PSIZE 100000
 
-ULL Ps[PSIZE];
-ULL Pd[PSIZE];
+u8 Ps[PSIZE];
+u8 Pd[PSIZE];
 
-static ULL
-P(ULL n)
+static u8
+P(u8 n)
 {
 	return (n * (3ul * n - 1ul)) / 2ul;
 }
@@ -19,20 +19,24 @@ P(ULL n)
 static int
 cmp_int64(const void *n1, const void *n2)
 {
-	ULL v1 = *(ULL*)n1;
-	ULL v2 = *(ULL*)n2;
+	u8 v1 = *(u8*)n1;
+	u8 v2 = *(u8*)n2;
+
 	if(v1 > v2) return 1;
 	if(v1 == v2) return 0;
 	if(v1 < v2) return -1;
+
 	return 0;
 }
 
 static int
-ispent(ULL n)
+ispent(u8 n)
 {
-	int *b = bsearch(&n, Pd, PSIZE, sizeof(ULL), cmp_int64);
+	int *b = bsearch(&n, Pd, PSIZE, sizeof(u8), cmp_int64);
 
-	if(b!=NULL) return *b;
+	if(b != NULL)
+		return *b;
+
 	return 0;
 }
 
@@ -46,20 +50,24 @@ main(int argc, char*argv[])
 	{
 		Ps[i] = P(i);
 	}
+
 	memcpy(Pd, Ps, sizeof(Pd));
-	qsort(Pd, PSIZE, sizeof(ULL), cmp_int64);
+	qsort(Pd, PSIZE, sizeof(u8), cmp_int64);
 
 	for(D=1;D<1150;++D)
 	{
 		for(i=1;i<PSIZE;++i)
 		{
-			ULL p1;
-			ULL p2;
+			u8 p1;
+			u8 p2;
+
 			if(i+D>PSIZE) continue;
+
 			p1 = Ps[i];
 			p2 = Ps[i + D];
+
 			if(ispent(p1+p2) && ispent(p2-p1)) {
-				printf("(%d)"ULLFMT" "ULLFMT" D=%d diff="ULLFMT"\n", i, p1, p2, D, p2 - p1);
+				printf("(%d)%llu %llu D=%d diff=%llu\n", i, p1, p2, D, p2 - p1);
 				return 0;
 			}
 		}
