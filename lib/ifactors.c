@@ -4,10 +4,10 @@
 #include <euler/primes.h>
 
 /* How many times a prime divides a number */
-int
-prime_root(long *num, long prime)
+u8
+prime_root(u8 *num, u8 prime)
 {
-	int ret = 0;
+	u8 ret = 0;
 
 	if (prime == 1) return *num;
 
@@ -20,11 +20,11 @@ prime_root(long *num, long prime)
 	return ret;
 }
 
-void ifactors_map_insert(ifactors_map_t *map, int prime, int power)
+void ifactors_map_insert(ifactors_map_t *map, u8 prime, u8 power)
 {
 	map->nfactors++;
-	map->primes = realloc(map->primes, sizeof(int)*map->nfactors);
-	map->powers = realloc(map->powers, sizeof(int)*map->nfactors);
+	map->primes = realloc(map->primes, sizeof(u8)*map->nfactors);
+	map->powers = realloc(map->powers, sizeof(u8)*map->nfactors);
 	map->primes[map->nfactors-1] = prime;
 	map->powers[map->nfactors-1] = power;
 }
@@ -40,20 +40,20 @@ ifactors_map_free(ifactors_map_t *map)
 }
 
 ifactors_map_t
-ifactors(prime_list_t *primes, long num)
+ifactors(prime_list_t *primes, u8 num)
 {
 	ifactors_map_t ret = {NULL, NULL, 0};
 
 
-	for(int current_prime_idx = 0; num != 1; current_prime_idx++)
+	for(u8 current_prime_idx = 0; num != 1; current_prime_idx++)
 	{
 		if (current_prime_idx >= primes->count)
 			FAIL("Not enough primes for %ld", num);
-		const int current_prime = primes->primes[current_prime_idx];
+		const u8 current_prime = primes->primes[current_prime_idx];
 		if (current_prime > num)
 			break;
 
-		const int current_power = prime_root(&num, current_prime);
+		const u8 current_power = prime_root(&num, current_prime);
 
 		if (current_power > 0)
 		{

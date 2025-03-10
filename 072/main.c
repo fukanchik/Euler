@@ -6,7 +6,6 @@
 
 prime_list_t primes;
 
-#define D 8
 #define D 1000000
 
 int pdenom[1000000];
@@ -17,7 +16,7 @@ int pnumer[1000000];
 int cache[CACHESZ][CACHEY];
 
 void
-fillcache()
+fillcache(void)
 {
   if(primes.count>=CACHESZ) {
     abort();
@@ -48,7 +47,7 @@ int sumprimes(int *powers)
 
 int SUMDENOM=0;
 int
-generate()
+generate(void)
 {
   for(int i=0; i < primes.count; ++i) {
     pdenom[i]++;
@@ -63,7 +62,7 @@ generate()
 
 int SUMNUMER=1;
 
-int gennumer()
+int gennumer(void)
 {
   int flag=0;
   for(int i=0; i < primes.count; ++i) {

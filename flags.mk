@@ -1,4 +1,4 @@
-FLAGS=-D_POSIX_C_SOURCE=200809L -O0 -ggdb -Wall -pedantic -I../lib
+FLAGS=-D_POSIX_C_SOURCE=200809L -O0 -ggdb -Wall -pedantic -I../lib -Werror
 CFLAGS=-std=c99 $(FLAGS)
 LDOPT=-O0 -ggdb
 

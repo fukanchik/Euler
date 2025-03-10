@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include <euler/assert.h>
 #include <euler/config.h>
 #include <euler/number.h>
@@ -84,4 +86,15 @@ lpow(long m, long n)
 	for (long i = 0; i < n; ++i) ret *= m;
 
 	return ret;
+}
+
+bool
+is_square(u8 num)
+{
+	u8 root = sqrt(num);
+	while (root * root < num)
+	{
+		root++;
+	}
+	return root * root == num;
 }

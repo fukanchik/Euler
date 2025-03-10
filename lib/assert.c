@@ -16,4 +16,3 @@ void FAIL(const char *fmt, ...)
 	va_end(va);
 	abort();
 }
-

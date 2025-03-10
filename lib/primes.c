@@ -1,6 +1,3 @@
-#include <euler/config.h>
-#include <euler/primes.h>
-#include <euler/assert.h>
 #include <malloc.h>
 #include <math.h>
 #include <stdio.h>
@@ -11,12 +8,15 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <euler/primes.h>
+#include <euler/assert.h>
+
 static void
-primes_init(prime_list_t *list, int size)
+primes_init(prime_list_t *list, u8 size)
 {
 	list->total  = size;
 	list->count  = 0;
-	list->primes = malloc(sizeof(int) * size);
+	list->primes = malloc(sizeof(u8) * size);
 }
 
 void
@@ -24,7 +24,7 @@ primes_free(prime_list_t *list)
 {
 	if (list)
 	{
-		memset(list->primes, 0, sizeof(int) * list->total);
+		memset(list->primes, 0, sizeof(u8) * list->total);
 		free(list->primes);
 		list->primes = NULL;
 	}
@@ -35,7 +35,7 @@ primes_dump(prime_list_t *primes, const char *fname)
 {
 	int fd = open(fname, O_CREAT|O_TRUNC|O_WRONLY, 0666);
 	if (fd==-1) FAIL("Can't open a file");
-	write(fd, primes->primes, sizeof(int)*primes->count);
+	write(fd, primes->primes, sizeof(u8)*primes->count);
 	if (close(fd) != 0) FAIL("Can't close a file");
 }
 
@@ -48,100 +48,100 @@ primes_load(prime_list_t *primes, const char *fname)
 	if (fd == -1) FAIL("Can't read a file");
 	if (fstat(fd, &st) != 0) FAIL("Can' fstat()");
 
-	primes->count = st.st_size / sizeof(int);
+	primes->count = st.st_size / sizeof(u8);
 	primes->total = primes->count;
 	primes->primes = malloc(st.st_size);
-	if (primes->primes == NULL) FAIL("Can't allocate mem for primes");
+	if (primes->primes == NULL)
+		FAIL("Can't allocate mem for primes");
 	if (read(fd, primes->primes, st.st_size) != st.st_size) FAIL("Can't read primes");
 
-	if (close(fd) != 0) FAIL("Can't close a file");
+	if (close(fd) != 0)
+		FAIL("Can't close a file");
 }
 
 void
 primes_for_each(prime_list_t *list,
-                int (*f)(const prime_list_t *const, int prime, void *arg),
+                bool (*f)(const prime_list_t *const, u8 prime, void *arg),
                 void *arg)
 {
-	int i;
-
-	for (i = 0; i < list->count; ++i)
+	for (u8 i = 0; i < list->count; ++i)
 	{
-		if (f(list, list->primes[i], arg)) break;
+		if (f(list, list->primes[i], arg))
+			break;
 	}
 }
 
 void
 primes_for_each_simple(prime_list_t *list,
-                       int (*f)(const prime_list_t *const, int prime))
+                       bool (*f)(const prime_list_t *const, u8 prime))
 {
-	int i;
-
-	for (i = 0; i < list->count; ++i)
+	for (u8 i = 0; i < list->count; ++i)
 	{
-		if (f(list, list->primes[i])) break;
+		if (f(list, list->primes[i]))
+			break;
 	}
 }
 
 void
-primes_for_each_extra(int start, int end, prime_list_t *list,
-                      int (*f)(const prime_list_t *const, int position,
-                               int prime, void *arg),
+primes_for_each_extra(u8 start, u8 end, prime_list_t *list,
+                      bool (*f)(const prime_list_t *const, u8 position,
+								u8 prime, void *arg),
                       void *arg)
 {
-	int i;
+	const u8 stop = MIN(end, list->count);
 
-	for (i = start; i < MIN(end, list->count); ++i)
+	for (u8 i = start; i < stop; ++i)
 	{
-		if (f(list, i, list->primes[i], arg)) break;
+		if (f(list, i, list->primes[i], arg))
+			break;
 	}
 }
 
 static void
-primes_add(prime_list_t *list, int prime)
+primes_add(prime_list_t *list, u8 prime)
 {
 	if (list->total == list->count)
 	{
-		fprintf(stderr, "Primes list is full!\n");
-		abort();
+		FAIL("Primes list is full!\n");
 	}
 	list->primes[list->count++] = prime;
 }
 
-static int
-primes_add_sieve(prime_list_t *list, int num)
+static bool
+primes_add_sieve(prime_list_t *list, u8 num)
 {
-	int half = sqrt(num) + 1;
-	int i;
+	u8 half = sqrt(num) + 1;
 
-	for (i = 0; i < list->count && list->primes[i] < half; ++i)
-		if ((num % list->primes[i]) == 0) return 0;
+	for (u8 i = 0; i < list->count && list->primes[i] < half; ++i)
+		if ((num % list->primes[i]) == 0)
+			return false;
 
 	primes_add(list, num);
 
-	return 1;
+	return true;
 }
 
 void
-primes_init_fill(prime_list_t *list, int size)
+primes_init_fill(prime_list_t *list, u8 size)
 {
-	int i;
-
 	primes_init(list, size / 2);
 	primes_add(list, 2);
 
-	for (i = 3; i < size; ++i) primes_add_sieve(list, i);
+	for (u8 i = 3; i < size; ++i)
+		primes_add_sieve(list, i);
 }
 
-int
-primes_is_prime(const prime_list_t *const list, int num)
+bool
+primes_is_prime(const prime_list_t *const list, u8 num)
 {
 	/* TODO: if num <= list->primes[max], then do binary search in the list. */
-	int half = sqrt(num) + 1;
-	int i;
+	u8 half = sqrt(num) + 1;
 
 	if (num == 1) return 0;
-	for (i = 0; i < list->count && list->primes[i] < half; ++i)
-		if ((num % list->primes[i]) == 0) return 0;
+
+	for (u8 i = 0; i < list->count && list->primes[i] < half; ++i)
+		if ((num % list->primes[i]) == 0)
+			return 0;
 
 	return 1;
 }

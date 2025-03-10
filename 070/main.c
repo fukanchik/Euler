@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-#include <euler/config.h>
 #include <euler/number.h>
 #include <euler/primes.h>
 

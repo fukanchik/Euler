@@ -1,4 +1,3 @@
-#include <euler/config.h>
 #include <euler/primes.h>
 
 /*
@@ -17,10 +16,10 @@ struct _t2
   int denominator;
 };
 
-static int collect(const prime_list_t * const primes, int prime, void *arg);
+static bool collect(const prime_list_t * const primes, u8 prime, void *arg);
 
-static inline int
-collect(const prime_list_t * const primes, int prime, void *arg)
+static inline bool
+collect(const prime_list_t * const primes, u8 prime, void *arg)
 {
   struct _t2 *t = arg;
   int exp = 0;

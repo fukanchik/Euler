@@ -52,11 +52,10 @@ main(int argc, char *argv[])
 	{
 		if(ispandigital(primes.primes[i]))
 		{
-			printf("%d\n", primes.primes[i]);
+			printf("%llu\n", primes.primes[i]);
 			break;
 		}
 	}
 
 	return 0;
 }
-

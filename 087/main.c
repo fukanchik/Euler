@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <euler/config.h>
-#include <euler/primes.h>
 #include <string.h>
+
+#include <euler/primes.h>
 
 #define LIMIT 50000000
 #define SQ4 85

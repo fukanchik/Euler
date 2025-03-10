@@ -10,7 +10,7 @@
 prime_list_t primes;
 
 static int*
-build_graph()
+build_graph(void)
 {
   int i,j;
   int SIZE = primes.count * primes.count * sizeof(int);
@@ -35,7 +35,7 @@ build_graph()
       matrix[i * primes.count + j] = matrix[i * primes.count + j] && matrix[i * primes.count + j] == matrix[j * primes.count + i];
     }
   }
-  
+
   return matrix;
 }
 
@@ -48,7 +48,7 @@ print_row(int *row, int width)
   printf("[");
   for(i=0;i<width;++i) {
     if(row[i] !=-1) {
-      printf("%s%d", sep, primes.primes[row[i]]);
+      printf("%s%llu", sep, primes.primes[row[i]]);
       sep = ", ";
     }
   }

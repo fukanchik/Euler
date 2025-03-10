@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-#include <euler/config.h>
 #include <euler/primes.h>
 
 static prime_list_t primes;
@@ -14,7 +13,6 @@ static prime_list_t primes;
   muls : map(lambda([x], (1-1/first(x))), ifactors(n))],
   n * product(muls[i], i, 1, length(lst))
   )]), makelist(i, i, 2, 1000000)) ) $
- 
 */
 
 int

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <euler/config.h>
+
 #include <euler/primes.h>
 #include <stdlib.h>
 #include <euler/number.h>
@@ -12,7 +12,7 @@ prime_list_t primes;
 void explode(int num, int *buf, int len);
 int implode(int *buf, int len);
 int allbits(int len);
-int find_groups(const prime_list_t * const pl, int prime);
+bool find_groups(const prime_list_t * const pl, u8 prime);
 static void __set(int *buf, int len, int digit, int mask);
 int set(int prime, int len, int digit, int mask);
 
@@ -85,8 +85,8 @@ set(int prime, int len, int digit, int mask)
   return implode(buf, len);
 }
 
-int
-find_groups(const prime_list_t * const pl, int prime)
+bool
+find_groups(const prime_list_t * const pl, u8 prime)
 {
   int len = num_len(prime);
   int mask_max = allbits(len - 1);
