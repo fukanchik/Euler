@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-#include <euler/large.h>
 #include <euler/assert.h>
 #include <euler/fibo.h>
 
 #define SIZE 100000
+
 static int
 large_is_pandigital1_9(struct large* num, int dir)
 {
@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
 #define TOP 1000000000
   for(i=1;i <= TOP;++i) {
     large_fibo(ln, i);
-    
+
     if((i%10000)==9999) {
       printf("%d %d\n", i, ln->len);
       if(ln->len+1000>SIZE) FAIL("MOAR!");

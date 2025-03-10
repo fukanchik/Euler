@@ -7,9 +7,6 @@ include ../sys.mk
 include ../tools.mk
 include ../flags.mk
 
-CFLAGS += -fgcse-las -faggressive-loop-optimizations -fdelete-null-pointer-checks -fwhole-program
-
 OBJS=main.o
 
 include ../build.mk
-

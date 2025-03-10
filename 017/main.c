@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+
 /*directly from wikipedia*/
 static const char* __names[]={
 	"zero",
@@ -43,43 +44,43 @@ number_as_word(int num, char* buf)
 {
 	buf[0]=0;
 
-	if(num==1000) {
-		strcpy(buf, "one thousand");
+	if(num == 1000) {
+		strncpy(buf, "one thousand", 8192);
 		return;
 	}
 	if(num >= 100)
 	{
-		int d = (num%1000)/100;
+		int d = (num % 1000) / 100;
 		int r = num % 100;
 		number_as_word(d, buf);
-		strcat(buf, " hundred");
+		strncat(buf, " hundred", 8192);
 		if(r>0)
 		{
 			char bufr[8192];
-			strcat(buf, " and ");
+			strncat(buf, " and ", 8192);
 			number_as_word(r, bufr);
-			strcat(buf, bufr);
+			strncat(buf, bufr, 8192);
 		}
 		return;
 	}
-	if(num>20)
+	if (num > 20)
 	{
 		int d = (num % 100)/10;
 		int r = num % 10;
 
-		strcat(buf, __decs[d]);
+		strncat(buf, __decs[d], 8192);
 		if(r>0)
 		{
 			char bufr[256];
-			strcat(buf, "-");
+			strncat(buf, "-", 8192);
 			number_as_word(r, bufr);
-			strcat(buf, bufr);
+			strncat(buf, bufr, 8192);
 		}
 		return;
 	}
 	if(0 < num && num<=20)
 	{
-		strcat(buf, __names[num]);
+		strncat(buf, __names[num], 8192);
 		return;
 	}
 

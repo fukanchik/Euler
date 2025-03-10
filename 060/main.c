@@ -139,7 +139,7 @@ bron_kerbosch_inner(int *matrix, int width, int *set_all, int *set_some, int *se
   int *new_all = malloc(SIZE);
   int *new_some = malloc(SIZE);
   int *new_none = malloc(SIZE);
-  
+
   for(i = 0; i < width; ++i) {
     int v= set_some[i];
     if(v==-1)continue;

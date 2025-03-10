@@ -1,5 +1,4 @@
 #include <euler/assert.h>
-#include <euler/large.h>
 #include <euler/fibo.h>
 
 #define SIZE 100000
@@ -9,7 +8,7 @@ static struct large* ln2;
 static int last=1;
 
 void
-large_fibo_init()
+large_fibo_init(void)
 {
   last = 1;
   ln1 = large_from_int(SIZE, 1);
@@ -48,5 +47,3 @@ large_fibo(struct large* out, int num)
   large_copy(out, ln1);
   last = num;
 }
-
-
