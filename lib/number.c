@@ -98,3 +98,16 @@ is_square(u8 num)
 	}
 	return root * root == num;
 }
+
+void
+num_to_digits(u8 num, int *digits, int *dlen)
+{
+	int i = 0;
+
+	for (; i < DIGITS_U8; ++i)
+	{
+		digits[i] = num % 10;
+		num /= 10;
+	}
+	if (dlen) *dlen = i;
+}

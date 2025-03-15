@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <euler/config.h>
 
+#define DIGITS_U8 20
+
 /*
  * Number theory.
  *
@@ -36,6 +38,9 @@ int num_concat(int n1, int n2);
 int is_permutation(int n1, int n2);
 
 bool is_square(u8 num);
+
+/* Split number into digits. `digits' array should be DIGITS_U8 length. */
+void num_to_digits(u8 num, int *digits, int *dlen);
 
 /* GCD */
 int gcd(int n1, int n2);
