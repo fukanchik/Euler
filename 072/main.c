@@ -46,16 +46,19 @@ int sumprimes(int *powers)
 }
 
 int SUMDENOM=0;
+
 int
 generate(void)
 {
-  for(int i=0; i < primes.count; ++i) {
-    pdenom[i]++;
-    SUMDENOM = sumprimes(pdenom);
-    if(SUMDENOM <= D) {
-      return 1;
-    }
-    pdenom[i]=0;
+  for (int i = 0; i < primes.count; ++i)
+  {
+	  pdenom[i]++;
+	  SUMDENOM = sumprimes(pdenom);
+	  if (SUMDENOM <= D)
+	  {
+		  return 1;
+	  }
+	  pdenom[i] = 0;
   }
   return 0;
 }
@@ -106,8 +109,9 @@ main(int argc, char* argv[])
 
   primes_init_fill(&primes, D);
   fillcache();
-  
+
   memset(pdenom, 0, sizeof(pdenom));
+
   while(1) {
     if(!generate()) break;
     printf("sum=%d %llu\n", SUMDENOM, count);
