@@ -44,6 +44,6 @@ int
 main(int argc, char* argv[])
 {
 	int s = summa(0, 0);
-	printf("sum=%d\n", s);
+	printf("%d\n", s);
 	return 0;
 }
